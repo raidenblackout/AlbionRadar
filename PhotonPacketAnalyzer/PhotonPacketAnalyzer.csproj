@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PcapDotNet" Version="0.10.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Photon3Unity3D">
+      <HintPath>..\bin\Release\Photon3Unity3D.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
