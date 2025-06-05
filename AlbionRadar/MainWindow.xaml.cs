@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using AlbionRadar.ViewModels;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,11 +17,14 @@ namespace AlbionRadar
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        public MainViewModel ViewModel { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
-            var program = new Program(new AlbionDataHandlers.AlbionDataParser());
-            program.Start();
+            ViewModel = new MainViewModel();
+            this.DataContext = ViewModel;
         }
     }
 }
