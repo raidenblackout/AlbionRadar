@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:AlbionRadar"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    
     <Grid>
-
+        <Canvas x:Name="RadarCanvas"/>
     </Grid>
 </Window>

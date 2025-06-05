@@ -1,0 +1,33 @@
+﻿<Window x:Class="AlbionRadar.Dialogues.PacketDeviceSelectorDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AlbionRadar.Dialogues"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="PacketDeviceSelectorDialog" Height="450" Width="800">
+    
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Select the network interface to capture packets from:" Grid.Row="0" Margin="0,0,0,10" FontWeight="Bold"/>
+
+        <ListBox x:Name="DeviceListBox" Grid.Row="1" SelectionMode="Single">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding DescriptionOrName}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Content="Select" Width="75" Click="SelectButton_Click" IsDefault="True" Margin="0,0,10,0"/>
+            <Button Content="Cancel" Width="75" Click="CancelButton_Click" IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</Window>

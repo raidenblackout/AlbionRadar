@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -21,7 +22,7 @@ namespace BaseUtils.Logger.Impl
 
         public void I(string message, [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = 0, [CallerFilePath] string callerFilePath = "")
         {
-            throw new NotImplementedException();
+            Trace.WriteLine($"[{DateTime.Now:HH:mm:ss}] INFO: {message} (Caller: {callerMemberName}, Line: {callerLineNumber}, File: {callerFilePath})");
         }
     }
 

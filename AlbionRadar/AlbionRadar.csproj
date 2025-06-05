@@ -9,4 +9,14 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="PhotonPackageParser" Version="4.1.0" />
+    <PackageReference Include="SharpPcap" Version="6.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AlbionDataHandlers\AlbionDataHandlers.csproj" />
+    <ProjectReference Include="..\BaseUtils\BaseUtils.csproj" />
+  </ItemGroup>
+
 </Project>
