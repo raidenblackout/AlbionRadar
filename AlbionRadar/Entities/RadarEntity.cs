@@ -1,22 +1,27 @@
 ﻿using AlbionDataHandlers.Enums;
+using AlbionRadar.ViewModels;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace AlbionRadar.Entities;
 
-public class RadarEntity : INotifyPropertyChanged, IEqualityComparer<RadarEntity>
+/// <summary>  
+/// Represents an entity in the radar system with properties such as position, type, and other metadata.  
+/// Implements INotifyPropertyChanged for data binding and IEqualityComparer for comparison.  
+/// </summary>  
+public class RadarEntity : MVVMBase, IEqualityComparer<RadarEntity>
 {
-    public event PropertyChangedEventHandler? PropertyChanged;
-    protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
+    /// <summary>  
+    /// Compares two RadarEntity objects for equality based on their hash codes.  
+    /// </summary>  
     public bool Equals(RadarEntity? x, RadarEntity? y)
     {
-        return x.GetHashCode() == y.GetHashCode();
+        return x?.GetHashCode() == y?.GetHashCode();
     }
 
+    /// <summary>  
+    /// Generates a hash code for the RadarEntity object based on its properties.  
+    /// </summary>  
     public int GetHashCode([DisallowNull] RadarEntity obj)
     {
         unchecked
@@ -31,115 +36,85 @@ public class RadarEntity : INotifyPropertyChanged, IEqualityComparer<RadarEntity
         }
     }
 
+    // Backing fields for properties.  
     private string _name;
+    private float _positionX;
+    private float _positionY;
+    private int _id;
+    private int _typeId;
+    private string? _imageUrl = string.Empty;
+    private int _enchantmentLevel = 0;
+    private EntityTypes _type = EntityTypes.Player;
+
+    /// <summary>  
+    /// Gets or sets the name of the entity.  
+    /// </summary>  
     public string Name
     {
         get => _name;
-        set
-        {
-            if (_name != value)
-            {
-                _name = value;
-                OnPropertyChanged();
-            }
-        }
+        set => SetField(ref _name, value);
     }
 
-    private float _positionX;
+    /// <summary>  
+    /// Gets or sets the X-coordinate of the entity's position.  
+    /// </summary>  
     public float PositionX
     {
         get => _positionX;
-        set
-        {
-            if (_positionX != value)
-            {
-                _positionX = value;
-                OnPropertyChanged();
-            }
-        }
+        set => SetField(ref _positionX, value);
     }
 
-    private float _positionY;
+    /// <summary>  
+    /// Gets or sets the Y-coordinate of the entity's position.  
+    /// </summary>  
     public float PositionY
     {
         get => _positionY;
-        set
-        {
-            if (_positionY != value)
-            {
-                _positionY = value;
-                OnPropertyChanged();
-            }
-        }
+        set => SetField(ref _positionY, value);
     }
 
-    private int _id;
+    /// <summary>  
+    /// Gets or sets the unique identifier of the entity.  
+    /// </summary>  
     public int Id
     {
         get => _id;
-        set
-        {
-            if (_id != value)
-            {
-                _id = value;
-                OnPropertyChanged();
-            }
-        }
+        set => SetField(ref _id, value);
     }
 
-    private int _typeId;
+    /// <summary>  
+    /// Gets or sets the type identifier of the entity.  
+    /// </summary>  
     public int TypeId
     {
         get => _typeId;
-        set
-        {
-            if (_typeId != value)
-            {
-                _typeId = value;
-                OnPropertyChanged();
-            }
-        }
+        set => SetField(ref _typeId, value);
     }
 
-    private string? _imageUrl = string.Empty;
+    /// <summary>  
+    /// Gets or sets the image URL associated with the entity.  
+    /// </summary>  
     public string? ImageUrl
     {
         get => _imageUrl;
-        set
-        {
-            if (_imageUrl != value)
-            {
-                _imageUrl = value;
-                OnPropertyChanged();
-            }
-        }
+        set => SetField(ref _imageUrl, value);
     }
 
-    private int _enchantmentLevel = 0;
+    /// <summary>  
+    /// Gets or sets the enchantment level of the entity.  
+    /// </summary>  
     public int EnchantmentLevel
     {
         get => _enchantmentLevel;
-        set
-        {
-            if (_enchantmentLevel != value)
-            {
-                _enchantmentLevel = value;
-                OnPropertyChanged();
-            }
-        }
+        set => SetField(ref _enchantmentLevel, value);
     }
 
-    private EntityTypes _type = EntityTypes.Player;
+    /// <summary>  
+    /// Gets or sets the type of the entity.  
+    /// </summary>  
     public EntityTypes Type
     {
         get => _type;
-        set
-        {
-            if (_type != value)
-            {
-                _type = value;
-                OnPropertyChanged();
-            }
-        }
+        set => SetField(ref _type, value);
     }
 }

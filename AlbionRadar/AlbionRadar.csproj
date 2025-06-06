@@ -794,6 +794,7 @@
 
   <ItemGroup>
     <Folder Include="Assets\Enemies\Mist\" />
+    <Folder Include="Utils\" />
     <Folder Include="Views\" />
   </ItemGroup>
 

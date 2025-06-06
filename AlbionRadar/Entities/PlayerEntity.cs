@@ -1,40 +1,33 @@
-﻿using System.ComponentModel;
+﻿using AlbionRadar.ViewModels;
 
 namespace AlbionRadar.Entities;
 
-public class PlayerEntity : INotifyPropertyChanged
+/// <summary>  
+/// Represents a player entity with position properties.  
+/// Inherits from MVVMBase to support property change notifications.  
+/// </summary>  
+public class PlayerEntity : MVVMBase
 {
-    public event PropertyChangedEventHandler? PropertyChanged;
-    protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
     private float _positionX;
+    private float _positionY;
+
+    /// <summary>  
+    /// Gets or sets the X-coordinate of the player's position.  
+    /// Notifies listeners when the value changes.  
+    /// </summary>  
     public float PositionX
     {
         get => _positionX;
-        set
-        {
-            if (_positionX != value)
-            {
-                _positionX = value;
-                OnPropertyChanged();
-            }
-        }
+        set => SetField(ref _positionX, value);
     }
 
-    private float _positionY;
+    /// <summary>  
+    /// Gets or sets the Y-coordinate of the player's position.  
+    /// Notifies listeners when the value changes.  
+    /// </summary>  
     public float PositionY
     {
         get => _positionY;
-        set
-        {
-            if (_positionY != value)
-            {
-                _positionY = value;
-                OnPropertyChanged();
-            }
-        }
+        set => SetField(ref _positionY, value);
     }
 }
