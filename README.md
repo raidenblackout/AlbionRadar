@@ -64,11 +64,6 @@ If you are a developer and wish to contribute or modify the project, you can bui
         ```
     * This project is built with C# and .NET. Please follow the standard build and run procedures for that environment.
         * Open the `.sln` file in Visual Studio, build the solution, and then run the project.
-    * **Network Adapter Selection**: The first time you run AlbionRadar, it will prompt you to select your network adapter for packet capture.
-        * **For Wi-Fi Users**: Select your active **Wi-Fi adapter**.
-        * **For Ethernet Users**: Select your active **Ethernet adapter**.
-        ![Network Adapter Selection Prompt](https://github.com/raidenblackout/AlbionRadar/blob/main/Assets/PacketDeviceSelectorDialogue.png?raw=true)
-        * Upon successful execution, AlbionRadar should launch its separate information overlay window.
 
 ## Disclaimer
 
