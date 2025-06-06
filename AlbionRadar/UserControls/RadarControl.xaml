@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:AlbionRadar.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Canvas x:Name="RadarCanvas" Background="Black">
+    <Grid Background="Transparent">
+        <Canvas x:Name="RadarCanvas" Background="Transparent">
         </Canvas>
         <!-- Radar elements will be added here -->
     </Grid>

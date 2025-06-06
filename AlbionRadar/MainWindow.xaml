@@ -6,9 +6,13 @@
         xmlns:uc="clr-namespace:AlbionRadar.UserControls"
         xmlns:local="clr-namespace:AlbionRadar"
         mc:Ignorable="d"
+        WindowStyle="None"
+        Topmost="True"
+        Background="Transparent"
+        AllowsTransparency="True"
         Title="MainWindow" Height="450" Width="800">
 
-    <Grid>
+    <Grid Background="Transparent">
         <uc:RadarControl RadarEntities="{Binding RadarEntities, Mode=OneWay}" MainPlayer="{Binding MainPlayer, Mode=OneWay}"/>
     </Grid>
 </Window>

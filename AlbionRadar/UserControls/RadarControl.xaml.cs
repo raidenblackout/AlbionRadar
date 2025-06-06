@@ -82,7 +82,7 @@ namespace AlbionRadar.UserControls
                     {
                         title.InvalidateMeasure();
                         title.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-                        title.Arrange(new Rect(title.DesiredSize)); // This is the key addition
+                        title.Arrange(new Rect(title.DesiredSize));
                         double width = title.DesiredSize.Width;
                         Canvas.SetLeft(title, mappedPoints.Item1 + width/2);
                         Canvas.SetTop(title, mappedPoints.Item2 + 40);
