@@ -53,7 +53,6 @@
     <Compile Include="CommandType.cs" />
     <Compile Include="CrcCalculator.cs" />
     <Compile Include="Extensions\BinaryReaderExtensions.cs" />
-    <Compile Include="Extensions\Protocol16Deserializer.ext.cs" />
     <Compile Include="MessageType.cs" />
     <Compile Include="Models\EventData.cs" />
     <Compile Include="Models\OperationRequest.cs" />
