@@ -65,6 +65,16 @@ If you are a developer and wish to contribute or modify the project, you can bui
     * This project is built with C# and .NET. Please follow the standard build and run procedures for that environment.
         * Open the `.sln` file in Visual Studio, build the solution, and then run the project.
 
+
+## Contributions
+Any kinds of contributions are accepted, but we would love to see:
+
+1. EntityId and EntityType mappings for more in-game entities. Or corrections to existing mappings. You can find the mappings [here](https://github.com/raidenblackout/AlbionRadar/blob/main/AlbionDataHandlers/Assets/mob_info.json) (*We know there are many wrong mappings*)
+2. Refactoring and cleaning out the codebase.
+3. Improving the UI/UX of the overlay.
+4. Adding new features or improving existing ones.
+5. Bug fixes and performance improvements.
+6. Documentation improvements.
 ## Disclaimer
 
 This tool is provided for educational and experimental purposes only. The developers are not responsible for any actions taken by users of this software. Use at your own risk. Please be aware of and adhere to the Terms of Service of Albion Online when using any third-party tools.
