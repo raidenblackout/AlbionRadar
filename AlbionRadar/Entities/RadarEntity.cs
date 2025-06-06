@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using AlbionDataHandlers.Enums;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace AlbionRadar.Entities;
@@ -123,6 +124,20 @@ public class RadarEntity : INotifyPropertyChanged, IEqualityComparer<RadarEntity
             if (_enchantmentLevel != value)
             {
                 _enchantmentLevel = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    private EntityTypes _type = EntityTypes.Player;
+    public EntityTypes Type
+    {
+        get => _type;
+        set
+        {
+            if (_type != value)
+            {
+                _type = value;
                 OnPropertyChanged();
             }
         }

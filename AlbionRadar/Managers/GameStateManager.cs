@@ -9,6 +9,7 @@ public class GameStateManager
     private readonly object _stateLock = new object();
     private Player _currentPlayer;
     private Dictionary<int,Mob> _mobs = new Dictionary<int,Mob>();
+    private Dictionary<int, Harvestable> _harvestables= new Dictionary<int, Harvestable>();
 
     // --- Rendering & Timing ---
     private readonly Stopwatch _stopwatch = new();
@@ -26,6 +27,11 @@ public class GameStateManager
     public List<Mob> CurrentMobs
     {
         get { lock (_stateLock) { return _mobs.Values.ToList(); } }
+    }
+
+    public List<Harvestable> CurrentHarvestables
+    {
+        get { lock (_stateLock) { return _harvestables.Values.ToList(); } }
     }
 
     public GameStateManager()
@@ -72,8 +78,51 @@ public class GameStateManager
                         _mobs[mob.Id] = mob;
                     }
                 }
+
+                // Remove mobs that are no longer present
+                var idsToRemove = _mobs.Keys.Except(mobs.Select(m => m.Id)).ToList();
+                foreach (var id in idsToRemove)
+                {
+                    _mobs.Remove(id);
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                DLog.I(ex.Message);
+            }
+        }
+    }
+
+    public void UpdateHarvestablesState(IEnumerable<Harvestable> harvestables)
+    {
+        lock (_stateLock)
+        {
+            try
+            {
+                foreach (var harvestable in harvestables)
+                {
+                    if (_harvestables.ContainsKey(harvestable.Id))
+                    {
+                        // Update existing harvestable
+                        _harvestables[harvestable.Id].PositionX = harvestable.PositionX;
+                        _harvestables[harvestable.Id].PositionY = harvestable.PositionY;
+                        _harvestables[harvestable.Id].EnchantmentLevel = harvestable.EnchantmentLevel;
+                        _harvestables[harvestable.Id].Size = harvestable.Size;
+                    }
+                    else
+                    {
+                        // Add new harvestable
+                        _harvestables[harvestable.Id] = harvestable;
+                    }
+                }
+                // Remove harvestables that are no longer present
+                var idsToRemove = _harvestables.Keys.Except(harvestables.Select(h => h.Id)).ToList();
+                foreach (var id in idsToRemove)
+                {
+                    _harvestables.Remove(id);
+                }
+            }
+            catch (Exception ex)
             {
                 DLog.I(ex.Message);
             }
@@ -94,7 +143,13 @@ public class GameStateManager
             {
                 mob.Interpolate(InterpolationFactor);
             }
+
+            foreach (var harvestable in _harvestables.Values)
+            {
+                harvestable.Interpolate(InterpolationFactor);
+            }
         }
+
         _previousTimeTicks = currentTimeTicks;
         if (_flashTime >= 0.0f)
         {

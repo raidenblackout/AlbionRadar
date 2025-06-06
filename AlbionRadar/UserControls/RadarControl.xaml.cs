@@ -81,8 +81,8 @@ namespace AlbionRadar.UserControls
             // Rotate the position by 90 degrees clockwise around the main player  
             float deltaX = x - MainPlayer.PositionX;
             float deltaY = y - MainPlayer.PositionY;
-            float rotatedX = deltaY*5f;
-            float rotatedY = deltaX*5f;
+            float rotatedX = deltaY * 5f;
+            float rotatedY = deltaX * 5f;
 
             float relativeX = rotatedX + (float)RadarCanvas.ActualWidth / 2.0f;
             float relativeY = rotatedY + (float)RadarCanvas.ActualHeight / 2.0f;
@@ -93,7 +93,8 @@ namespace AlbionRadar.UserControls
         public ObservableCollection<Entities.RadarEntity> RadarEntities
         {
             get { return (ObservableCollection<Entities.RadarEntity>)GetValue(RadarEntitiesProperty); }
-            set { 
+            set
+            {
                 SetValue(RadarEntitiesProperty, value);
                 UpdateUI();
             }

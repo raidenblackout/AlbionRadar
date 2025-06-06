@@ -81,15 +81,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlbionDataParser.cs" />
+    <Compile Include="Entities\Harvestable.cs" />
     <Compile Include="Entities\InterpolatableEntity.cs" />
     <Compile Include="Entities\Mob.cs" />
     <Compile Include="Entities\MobTypeInfo.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Enums\EnchantmentLevels.cs" />
+    <Compile Include="Enums\EntityTypes.cs" />
     <Compile Include="Enums\MobTypes.cs" />
     <Compile Include="Enums\EventCodes.cs" />
     <Compile Include="Enums\RequestCodes.cs" />
     <Compile Include="Enums\TierLevels.cs" />
+    <Compile Include="Handlers\HarvestableHandler\HarvestableHandler.cs" />
     <Compile Include="Handlers\IEventHandler.cs" />
     <Compile Include="Handlers\IRequestHandler.cs" />
     <Compile Include="Handlers\MobsHandler\MobsHandler.cs" />

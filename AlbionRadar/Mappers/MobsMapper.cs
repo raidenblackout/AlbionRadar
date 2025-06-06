@@ -17,6 +17,7 @@ public static class MobsMapper
             PositionY = mob.CurrentLerpedY,
             ImageUrl = GetImageUrl(mob),
             EnchantmentLevel = mob.EnchantmentLevel,
+            Type = AlbionDataHandlers.Enums.EntityTypes.Mob,
         };
         return entity;
     }

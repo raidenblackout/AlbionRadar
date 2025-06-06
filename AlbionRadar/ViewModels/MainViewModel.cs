@@ -20,12 +20,13 @@ public class MainViewModel : INotifyPropertyChanged
 {
     // --- The Core Components ---  
     private readonly GameStateManager _gameStateManager;
-    private readonly DispatcherTimer _uiUpdateTimer;
 
     // --- Albion Data Handlers ---  
     private readonly MobsHandler _mobsHandler;
     private readonly PlayersHandler _playersHandler;
+    private readonly HarvestableHandler _harvestableHandler;
     private readonly Program _mainProgram;
+    private readonly DispatcherTimer uiUpdateTimer;
 
     // --- UI-Bound Properties ---  
     private ObservableCollection<RadarEntity> _radarEntities = new ObservableCollection<RadarEntity>();
@@ -48,39 +49,52 @@ public class MainViewModel : INotifyPropertyChanged
 
         _mobsHandler = new MobsHandler();
         _playersHandler = new PlayersHandler();
+        _harvestableHandler = new HarvestableHandler();
 
         var albionDataParser = new AlbionDataParser();
         _mainProgram = new Program(albionDataParser);
 
         albionDataParser.RegisterEventHandler(_mobsHandler);
         albionDataParser.RegisterEventHandler(_playersHandler);
+        albionDataParser.RegisterEventHandler(_harvestableHandler);
 
         _mobsHandler.Mobs.Subscribe(_gameStateManager.UpdateMobsState);
         _playersHandler.Player.Subscribe(_gameStateManager.UpdatePlayerState);
+        _harvestableHandler.Harvestables.Subscribe(_gameStateManager.UpdateHarvestablesState);
 
         _mainProgram.Start();
 
-        System.Windows.Media.CompositionTarget.Rendering += OnUiTick;
+        uiUpdateTimer = new DispatcherTimer();
+        uiUpdateTimer.Tick += OnUiTick;
+        uiUpdateTimer.Interval = TimeSpan.FromMilliseconds(33);
+        uiUpdateTimer.Start();
     }
 
+    private readonly object _uiLock = new object();
     private void OnUiTick(object? sender, EventArgs e)
     {
-        _gameStateManager.Update();
-
-        var playerState = _gameStateManager.CurrentPlayer;
-        if (playerState != null)
+        lock (_uiLock)
         {
-            MainPlayer.PositionX = playerState.CurrentLerpedX;
-            MainPlayer.PositionY = playerState.CurrentLerpedY;
+            _gameStateManager.Update();
 
-            OnPropertyChanged(nameof(MainPlayer));
+            var playerState = _gameStateManager.CurrentPlayer;
+            if (playerState != null)
+            {
+                MainPlayer.PositionX = playerState.CurrentLerpedX;
+                MainPlayer.PositionY = playerState.CurrentLerpedY;
+
+                OnPropertyChanged(nameof(MainPlayer));
+            }
+
+            var mobState = _gameStateManager.CurrentMobs;
+
+            var newUiEntities = mobState.Select(mob => mob.ToRadarEntity()).OfType<RadarEntity>();
+
+            var harvestableState = _gameStateManager.CurrentHarvestables;
+            newUiEntities = newUiEntities.Concat(harvestableState.Select(harvestable => harvestable.ToRadarEntity()).OfType<RadarEntity>());
+
+            RadarEntities = new ObservableCollection<RadarEntity>(newUiEntities);
         }
-
-        var mobState = _gameStateManager.CurrentMobs;
-
-        var newUiEntities = mobState.Select(mob => mob.ToRadarEntity()).OfType<RadarEntity>();
-
-        RadarEntities = new ObservableCollection<RadarEntity>(newUiEntities);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
