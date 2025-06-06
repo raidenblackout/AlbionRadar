@@ -2,6 +2,7 @@
 using AlbionDataHandlers.Handlers;
 using BaseUtils.Logger.Impl;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AlbionDataHandlers;
 
@@ -45,7 +46,7 @@ public class AlbionDataParser : PhotonParser.PhotonParser
 
         _eventHandlers.ForEach(handler =>
         {
-            handler.OnEvent(eventCode, parameters);
+            Task.Run(() => handler.OnEvent(eventCode, parameters));
         });
     }
 
@@ -68,7 +69,7 @@ public class AlbionDataParser : PhotonParser.PhotonParser
 
         _eventHandlers.ForEach(handler =>
         {
-            handler.OnRequest(requestCode, parameters);
+            Task.Run(() => handler.OnRequest(requestCode, parameters));
         });
     }
 

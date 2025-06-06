@@ -92,7 +92,7 @@ public class MobsHandler : IEventHandler
 
     private void HandleLeave(Dictionary<byte, object> parameters)
     {
-        int id = EventHandlerUtils.ExtractValue<int>(parameters, 0);
+        int id = int.Parse(parameters[0].ToString());
         lock (_lockObject)
         {
             var mobToRemove = _mobs.FirstOrDefault(m => m.Id == id);

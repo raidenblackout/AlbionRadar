@@ -2,6 +2,7 @@
 using BaseUtils.Logger.Impl;
 using PacketDotNet;
 using SharpPcap;
+using System.Threading.Tasks;
 
 namespace AlbionRadar;
 
@@ -20,7 +21,7 @@ public class Program
 
         device.OnPacketArrival += PacketHandler;
 
-        device.Open(DeviceModes.Promiscuous, 1000);
+        device.Open(DeviceModes.MaxResponsiveness, 1000);
 
         device.StartCapture();
     }
@@ -31,14 +32,18 @@ public class Program
         UdpPacket? packet = Packet.ParsePacket(rawCapture.LinkLayerType, rawCapture.Data).Extract<UdpPacket>();
         if (packet != null && (packet.SourcePort == 5056 || packet.DestinationPort == 5056))
         {
-            try
+
+            Task.Run(() =>
             {
-                albionDataParser.ReceivePacket(packet.PayloadData);
-            }
-            catch (Exception ex)
-            {
-                DLog.I($"Error: {ex}");
-            }
+                try
+                {
+                    albionDataParser.ReceivePacket(packet.PayloadData);
+                }
+                catch (Exception ex)
+                {
+                    DLog.I($"Error: {ex}");
+                }
+            });
         }
     }
 }

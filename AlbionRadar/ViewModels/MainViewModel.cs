@@ -2,84 +2,91 @@
 using AlbionDataHandlers.Entities;
 using AlbionDataHandlers.Handlers;
 using AlbionRadar.Entities;
-using PhotonParser;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Reactive.Linq;
+using System.Reactive.Concurrency;
+using System;
+using AlbionRadar.Managers;
+using System.Windows.Threading;
 
 namespace AlbionRadar.ViewModels;
 
 public class MainViewModel : INotifyPropertyChanged
 {
+    // --- The Core Components ---  
+    private readonly GameStateManager _gameStateManager;
+    private readonly DispatcherTimer _uiUpdateTimer;
 
-    private MobsHandler _mobsHandler;
-    private PlayersHandler _playersHandler;
-    private Program _mainProgram;
+    // --- Albion Data Handlers ---  
+    private readonly MobsHandler _mobsHandler;
+    private readonly PlayersHandler _playersHandler;
+    private readonly Program _mainProgram;
 
+    // --- UI-Bound Properties ---  
     private ObservableCollection<RadarEntity> _radarEntities = new ObservableCollection<RadarEntity>();
     public ObservableCollection<RadarEntity> RadarEntities
     {
         get => _radarEntities;
-        set
-        {
-            _radarEntities = value;
-            OnPropertyChanged();
-        }
+        set { _radarEntities = value; OnPropertyChanged(); }
     }
 
-    private PlayerEntity _mainPlayer;
+    private PlayerEntity _mainPlayer = new PlayerEntity(); // Initialize to avoid nullability issues  
     public PlayerEntity MainPlayer
     {
         get => _mainPlayer;
-        set
-        {
-            _mainPlayer = value;
-            OnPropertyChanged();
-        }
+        set { _mainPlayer = value; OnPropertyChanged(); }
     }
 
     public MainViewModel()
     {
+        _gameStateManager = new GameStateManager();
+
         _mobsHandler = new MobsHandler();
         _playersHandler = new PlayersHandler();
+
         var albionDataParser = new AlbionDataParser();
         _mainProgram = new Program(albionDataParser);
+
         albionDataParser.RegisterEventHandler(_mobsHandler);
         albionDataParser.RegisterEventHandler(_playersHandler);
+
+        _mobsHandler.Mobs.Subscribe(_gameStateManager.UpdateMobsState);
+        _playersHandler.Player.Subscribe(_gameStateManager.UpdatePlayerState);
+
         _mainProgram.Start();
 
-        _mobsHandler.Mobs.Subscribe(OnMobsUpdated);
-        _playersHandler.Player.Subscribe(OnPlayerUpdated);
+        _uiUpdateTimer = new DispatcherTimer();
+        _uiUpdateTimer.Interval = TimeSpan.FromMilliseconds(33);
+        _uiUpdateTimer.Tick += OnUiTick;
+        _uiUpdateTimer.Start();
     }
 
-    private void OnPlayerUpdated(Player player)
+    private void OnUiTick(object? sender, EventArgs e)
     {
-        MainPlayer = new PlayerEntity
+        var playerState = _gameStateManager.CurrentPlayer;
+        if (playerState != null)
         {
-            PositionX = player.PositionX,
-            PositionY = player.PositionY,
-        };
-    }
+            MainPlayer.PositionX = playerState.PositionX;
+            MainPlayer.PositionY = playerState.PositionY;
 
-    private void OnMobsUpdated(IEnumerable<Mob> enumerable)
-    {
-        var radarEntities = enumerable.Select(mob => new RadarEntity
+            OnPropertyChanged(nameof(MainPlayer));
+        }
+
+        var mobState = _gameStateManager.CurrentMobs;
+
+        var newUiEntities = mobState.Select(mob => new RadarEntity
         {
             Id = mob.Id,
             Name = mob.Name,
             PositionX = mob.PositionX,
             PositionY = mob.PositionY,
             TypeId = mob.TypeId,
-        }).ToList();
-        Application.Current.Dispatcher.Invoke(() =>
-        {
-            RadarEntities.Clear();
-            foreach (var entity in radarEntities)
-            {
-                RadarEntities.Add(entity);
-            }
         });
+
+        RadarEntities = new ObservableCollection<RadarEntity>(newUiEntities);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

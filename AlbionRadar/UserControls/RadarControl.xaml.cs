@@ -36,18 +36,8 @@ namespace AlbionRadar.UserControls
             var control = d as RadarControl;
             if (control != null)
             {
-                control.Subscribe();
+                control.UpdateUI();
             }
-        }
-
-        private void Subscribe()
-        {
-            RadarEntities.CollectionChanged += RadarEntities_CollectionChanged;
-        }
-
-        private void RadarEntities_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            UpdateUI();
         }
 
         private void UpdateUI()
@@ -68,10 +58,6 @@ namespace AlbionRadar.UserControls
                     var title = new TextBlock();
                     title.Text = $"{entity.Id}" ;
                     title.Foreground = new SolidColorBrush(Colors.Green);
-
-                    title.InvalidateArrange();
-                    title.InvalidateMeasure();
-                    title.UpdateLayout();
 
                     Canvas.SetLeft(ellipse, relativePosition.Item1);
                     Canvas.SetTop(ellipse, relativePosition.Item2);
