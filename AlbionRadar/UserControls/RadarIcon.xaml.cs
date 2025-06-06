@@ -55,6 +55,19 @@ namespace AlbionRadar.UserControls
                 return;
             }
 
+            if(RadarEntity.Name != null && RadarEntity.Name.Contains("MIST"))
+            {
+                // If the entity is a MIST, set the title to "MIST" and hide the image  
+                MainImage.Visibility = Visibility.Collapsed;
+                MainEllipse.Visibility = Visibility.Collapsed;
+                MistEllipse.Visibility  = Visibility.Visible;
+                MistDropShadow.Color = _dropShadowColorMap.ContainsKey(RadarEntity.EnchantmentLevel)
+                    ? _dropShadowColorMap[RadarEntity.EnchantmentLevel]
+                    : Colors.Transparent;
+                Title.Text = "MIST";
+                return;
+            }
+
             if (string.IsNullOrEmpty(RadarEntity.ImageUrl))
             {
                 // If no image URL is provided, show the ellipse and hide the image  

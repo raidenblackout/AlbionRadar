@@ -40,6 +40,7 @@ public static class MobsMapper
     /// <returns>A string representing the image URL, or null if the Mob type is not skinnable or harvestable.</returns>  
     private static string? GetImageUrl(Mob mob)
     {
+        if (mob.Name != null && mob.Name.Contains("MIST")) return null;
         // Check if the Mob is of a type that has an associated image.  
         if (mob.Type == AlbionDataHandlers.Enums.MobTypes.LivingSkinnable ||
             mob.Type == AlbionDataHandlers.Enums.MobTypes.LivingHarvestable)

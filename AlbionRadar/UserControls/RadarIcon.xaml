@@ -19,6 +19,20 @@
                      Width="20" Height="20" 
                      HorizontalAlignment="Center" 
                      VerticalAlignment="Center" Fill="Red" />
+            <Ellipse x:Name="MistEllipse" 
+                     Width="20" Height="20" 
+                     HorizontalAlignment="Center" 
+                     VerticalAlignment="Center"
+                     Visibility="Collapsed"
+                     Fill="LightSkyBlue">
+                <Ellipse.Effect>
+                    <DropShadowEffect x:Name="MistDropShadow" 
+                                      Color="LightBlue"
+                                      BlurRadius="25"
+                                      ShadowDepth="0"
+                                      Opacity="0.8"/>
+                </Ellipse.Effect>
+            </Ellipse>
             <Image x:Name="MainImage"
                        Width="40" Height="40"
                        HorizontalAlignment="Center"
