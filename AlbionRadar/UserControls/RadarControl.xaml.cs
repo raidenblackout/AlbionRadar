@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace AlbionRadar.UserControls
@@ -20,17 +11,43 @@ namespace AlbionRadar.UserControls
     /// </summary>
     public partial class RadarControl : UserControl
     {
-
-        public static readonly DependencyProperty RadarEntitiesProperty =
-            DependencyProperty.Register("RadarEntities", typeof(IEnumerable<Entities.RadarEntity>), typeof(RadarControl), new PropertyMetadata(null, OnRadarEntitiesChanged));
-
-        private static void OnRadarEntitiesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public static readonly DependencyProperty MainPLayerProperty =
+            DependencyProperty.Register("MainPlayer", typeof(Entities.PlayerEntity), typeof(RadarControl), new PropertyMetadata(null, OnMainPlayerChanged));
+        private static void OnMainPlayerChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = d as RadarControl;
             if (control != null)
             {
                 control.UpdateUI();
             }
+        }
+
+        public Entities.PlayerEntity MainPlayer
+        {
+            get { return (Entities.PlayerEntity)GetValue(MainPLayerProperty); }
+            set { SetValue(MainPLayerProperty, value); }
+        }
+
+        public static readonly DependencyProperty RadarEntitiesProperty =
+            DependencyProperty.Register("RadarEntities", typeof(ObservableCollection<Entities.RadarEntity>), typeof(RadarControl), new PropertyMetadata(null, OnRadarEntitiesChanged));
+
+        private static void OnRadarEntitiesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as RadarControl;
+            if (control != null)
+            {
+                control.Subscribe();
+            }
+        }
+
+        private void Subscribe()
+        {
+            RadarEntities.CollectionChanged += RadarEntities_CollectionChanged;
+        }
+
+        private void RadarEntities_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            UpdateUI();
         }
 
         private void UpdateUI()
@@ -47,17 +64,63 @@ namespace AlbionRadar.UserControls
                         Fill = Brushes.Red,
                         ToolTip = entity.Name
                     };
-                    Canvas.SetLeft(ellipse, entity.PositionX);
-                    Canvas.SetTop(ellipse, entity.PositionY);
+                    var relativePosition = GetPositionRelativeToPlayer(entity.PositionX, entity.PositionY);
+                    var title = new TextBlock();
+                    title.Text = $"{entity.Id}" ;
+                    title.Foreground = new SolidColorBrush(Colors.Green);
+
+                    title.InvalidateArrange();
+                    title.InvalidateMeasure();
+                    title.UpdateLayout();
+
+                    Canvas.SetLeft(ellipse, relativePosition.Item1);
+                    Canvas.SetTop(ellipse, relativePosition.Item2);
+                    Canvas.SetLeft(title, relativePosition.Item1-entity.Id.ToString().Length*2);
+                    Canvas.SetTop(title, relativePosition.Item2+4);
+
+                    title.RenderTransform = new RotateTransform(45);
                     RadarCanvas.Children.Add(ellipse);
+                    RadarCanvas.Children.Add(title);
                 }
             }
+
+            var mainPlayer = new Ellipse
+            {
+                Width = 10,
+                Height = 10,
+                Fill = Brushes.Blue,
+            };
+
+            Canvas.SetLeft(mainPlayer, RadarCanvas.ActualWidth / 2.0);
+            Canvas.SetTop(mainPlayer, RadarCanvas.ActualHeight / 2.0);
+
+            RadarCanvas.Children.Add(mainPlayer);
         }
 
-        public IEnumerable<Entities.RadarEntity> RadarEntities
+        private Tuple<float, float> GetPositionRelativeToPlayer(float x, float y)
         {
-            get { return (IEnumerable<Entities.RadarEntity>)GetValue(RadarEntitiesProperty); }
-            set { SetValue(RadarEntitiesProperty, value); }
+            if (MainPlayer == null)
+                return new Tuple<float, float>(x, y);
+
+            // Rotate the position by 90 degrees clockwise around the main player  
+            float deltaX = x - MainPlayer.PositionX;
+            float deltaY = y - MainPlayer.PositionY;
+            float rotatedX = deltaY*2f;
+            float rotatedY = deltaX*2f;
+
+            float relativeX = rotatedX + (float)RadarCanvas.ActualWidth / 2.0f;
+            float relativeY = rotatedY + (float)RadarCanvas.ActualHeight / 2.0f;
+
+            return new Tuple<float, float>(relativeX, relativeY);
+        }
+
+        public ObservableCollection<Entities.RadarEntity> RadarEntities
+        {
+            get { return (ObservableCollection<Entities.RadarEntity>)GetValue(RadarEntitiesProperty); }
+            set { 
+                SetValue(RadarEntitiesProperty, value);
+                UpdateUI();
+            }
         }
 
         public RadarControl()

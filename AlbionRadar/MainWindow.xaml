@@ -9,6 +9,6 @@
         Title="MainWindow" Height="450" Width="800">
 
     <Grid>
-        <uc:RadarControl RadarEntities="{Binding RadarEntities, Mode=OneWay}" />
+        <uc:RadarControl RadarEntities="{Binding RadarEntities, Mode=OneWay}" MainPlayer="{Binding MainPlayer, Mode=OneWay}"/>
     </Grid>
 </Window>

@@ -18,6 +18,11 @@
   <ItemGroup>
     <ProjectReference Include="..\AlbionDataHandlers\AlbionDataHandlers.csproj" />
     <ProjectReference Include="..\BaseUtils\BaseUtils.csproj" />
+    <ProjectReference Include="..\PhotonParser\PhotonParser.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\" />
   </ItemGroup>
 
 </Project>

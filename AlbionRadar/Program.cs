@@ -1,18 +1,19 @@
 ﻿using AlbionDataHandlers;
 using BaseUtils.Logger.Impl;
 using PacketDotNet;
-using PhotonPackageParser;
+using PacketDotNet.Ieee80211;
+using PhotonParser;
 using SharpPcap;
 
 namespace AlbionRadar;
 
 public class Program
 {
-    private readonly AlbionDataParser photonParser;
+    private readonly AlbionDataParser albionDataParser;
 
-    public Program(AlbionDataParser photonParser)
+    public Program(AlbionDataParser albionDataParser)
     {
-        this.photonParser = photonParser ?? throw new ArgumentNullException(nameof(photonParser));
+        this.albionDataParser = albionDataParser;
     }
 
     public void Start()
@@ -20,10 +21,11 @@ public class Program
         ICaptureDevice device = PacketDeviceSelector.AskForPacketDevice();
 
         // Fix for CS0149: Use a lambda expression to specify the method name  
-        device.OnPacketArrival += (sender, e) => PacketHandler(sender, e);
+        //device.OnPacketArrival += (sender, e) => Device_OnPacketArrival_ManualStyle(sender, e);
+        device.OnPacketArrival += PacketHandler;
 
         // Fix for CS0103: Define DeviceMode explicitly  
-        device.Open(DeviceModes.Promiscuous, 1000);
+        device.Open(DeviceModes.MaxResponsiveness, 1000);
 
         device.StartCapture();
     }
@@ -39,11 +41,53 @@ public class Program
         {
             try
             {
-                photonParser.ReceivePacket(packet.PayloadData);
-            }catch(Exception ex)
+                albionDataParser.ReceivePacket(packet.PayloadData);
+            }
+            catch (Exception ex)
             {
                 DLog.I($"Error: {ex}");
             }
+        }
+    }
+
+    private void Device_OnPacketArrival_ManualStyle(object sender, PacketCapture e)
+    {
+        try
+        {
+            RawCapture rawCapture = e.GetPacket();
+            byte[] buffer = rawCapture.Data; // This is the full raw packet buffer  
+            int nbytes = rawCapture.Data.Length; // Equivalent to JS nbytes  
+
+            var packet = Packet.ParsePacket(rawCapture.LinkLayerType, buffer);
+            if (packet == null)
+            {
+                return;
+            }
+
+            IPPacket ipPacket = packet.Extract<IPPacket>();
+            if (ipPacket == null)
+            {
+                return;
+            }
+
+            UdpPacket udpPacket = ipPacket.Extract<UdpPacket>();
+            if (udpPacket == null)
+            {
+                return;
+            }
+
+            byte[] payload = udpPacket.PayloadData;
+
+            if (payload != null && payload.Length > 0)
+            {
+                //string hexPayload = BitConverter.ToString(payload).Replace("-", " "); // Convert byte[] to hex string  
+                //DLog.I($"Payload (Hex): {hexPayload}");
+                albionDataParser.ReceivePacket(payload);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error processing packet (manual style): {ex.Message}");
         }
     }
 }

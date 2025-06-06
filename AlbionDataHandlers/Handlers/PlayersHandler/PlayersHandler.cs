@@ -1,13 +1,17 @@
-﻿using AlbionDataHandlers.Enums;
+﻿using AlbionDataHandlers.Entities;
+using AlbionDataHandlers.Enums;
+using AlbionDataHandlers.Utils;
 using BaseUtils.Logger.Impl;
 using System;
 using System.Collections.Generic;
+using System.Reactive.Subjects;
 
 namespace AlbionDataHandlers.Handlers;
 
 public class PlayersHandler : IEventHandler
 {
-    private static object lockObject = new object();
+    private Player _player = new Player();
+    public ISubject<Player> Player { get; } = new Subject<Player>();
 
     public void OnEvent(EventCodes eventCode, Dictionary<byte, object> parameters)
     {
@@ -72,5 +76,30 @@ public class PlayersHandler : IEventHandler
     private bool Remove(string id)
     {
         return true;
+    }
+
+    public void OnRequest(RequestCodes requestCode, Dictionary<byte, object> parameters)
+    {
+        switch(requestCode)
+        {
+            case RequestCodes.PlayerMoving:
+                HandlePlayerMoving(parameters);
+                break;
+
+        }
+    }
+
+    private void HandlePlayerMoving(Dictionary<byte, object> parameters)
+    {
+        var location = parameters[1] as Array;
+        float posX = float.Parse(location.GetValue(0).ToString());
+        float posY = float.Parse(location.GetValue(1).ToString());
+
+        _player.PositionX = posX;
+        _player.PositionY = posY;
+
+        DLog.I($"Player moved to position: ({posX}, {posY})");
+
+        Player.OnNext(_player);
     }
 }

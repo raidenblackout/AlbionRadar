@@ -35,7 +35,7 @@ public class MobsHandler : IEventHandler
 
     private void HandleNewMob(Dictionary<byte, object> parameters)
     {
-        int id = EventHandlerUtils.ExtractValue<int>(parameters, 0);
+        int id = int.Parse(parameters[0].ToString());
         int typeId = EventHandlerUtils.ExtractValue<int>(parameters, 1);
         var location = parameters[7] as Array;
         float posX = float.Parse(location.GetValue(0).ToString());
@@ -65,26 +65,48 @@ public class MobsHandler : IEventHandler
         }
         else
         {
-            lock (_lockObject)
+            var existingMob = _mobs.FirstOrDefault(m => m.Id == mob.Id);
+            if (existingMob != null)
             {
-                var existingMob = _mobs.FirstOrDefault(m => m.Id == mob.Id);
-                if (existingMob != null)
-                {
-                    _mobs.Remove(existingMob);
-                }
-                _mobs.Add(mob);
-                Mobs.OnNext(_mobs);
+                _mobs.Remove(existingMob);
             }
+            _mobs.Add(mob);
+            Mobs.OnNext(_mobs);
         }
     }
 
     private void HandleMove(Dictionary<byte, object> parameters)
     {
-        //throw new NotImplementedException();
+        int id = int.Parse(parameters[0].ToString());
+        float posX = EventHandlerUtils.ExtractValue<float>(parameters, 4);
+        float posY = EventHandlerUtils.ExtractValue<float>(parameters, 5);
+
+        var mobToUpdate = _mobs.FirstOrDefault(m => m.Id == id);
+        if (mobToUpdate != null)
+        {
+            mobToUpdate.PositionX = posX;
+            mobToUpdate.PositionY = posY;
+            Mobs.OnNext(_mobs);
+        }
     }
 
     private void HandleLeave(Dictionary<byte, object> parameters)
     {
-        //throw new NotImplementedException();
+        int id = EventHandlerUtils.ExtractValue<int>(parameters, 0);
+        lock (_lockObject)
+        {
+            var mobToRemove = _mobs.FirstOrDefault(m => m.Id == id);
+            if (mobToRemove != null)
+            {
+                _mobs.Remove(mobToRemove);
+                Mobs.OnNext(_mobs);
+            }
+        }
     }
+
+    public void OnRequest(RequestCodes requestCode, Dictionary<byte, object> parameters)
+    {
+    }
+
+
 }

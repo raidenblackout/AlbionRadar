@@ -1,13 +1,33 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AlbionRadar.Entities;
 
-public class RadarEntity : INotifyPropertyChanged
+public class RadarEntity : INotifyPropertyChanged, IEqualityComparer<RadarEntity>
 {
     public event PropertyChangedEventHandler? PropertyChanged;
     protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = "")
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    public bool Equals(RadarEntity? x, RadarEntity? y)
+    {
+        return x.GetHashCode() == y.GetHashCode();
+    }
+
+    public int GetHashCode([DisallowNull] RadarEntity obj)
+    {
+        unchecked
+        {
+            int hash = 17;
+            hash = hash * 23 + Id.GetHashCode();
+            hash = hash * 23 + TypeId.GetHashCode();
+            hash = hash * 23 + PositionX.GetHashCode();
+            hash = hash * 23 + PositionY.GetHashCode();
+            hash = hash * 23 + (Name?.GetHashCode() ?? 0);
+            return hash;
+        }
     }
 
     private string _name;
