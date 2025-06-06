@@ -60,19 +60,18 @@ public class MainViewModel : INotifyPropertyChanged
 
         _mainProgram.Start();
 
-        _uiUpdateTimer = new DispatcherTimer();
-        _uiUpdateTimer.Interval = TimeSpan.FromMilliseconds(33);
-        _uiUpdateTimer.Tick += OnUiTick;
-        _uiUpdateTimer.Start();
+        System.Windows.Media.CompositionTarget.Rendering += OnUiTick;
     }
 
     private void OnUiTick(object? sender, EventArgs e)
     {
+        _gameStateManager.Update();
+
         var playerState = _gameStateManager.CurrentPlayer;
         if (playerState != null)
         {
-            MainPlayer.PositionX = playerState.PositionX;
-            MainPlayer.PositionY = playerState.PositionY;
+            MainPlayer.PositionX = playerState.CurrentLerpedX;
+            MainPlayer.PositionY = playerState.CurrentLerpedY;
 
             OnPropertyChanged(nameof(MainPlayer));
         }

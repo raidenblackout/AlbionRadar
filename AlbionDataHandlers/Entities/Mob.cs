@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace AlbionDataHandlers.Entities;
 
-public record Mob : IEqualityComparer<Mob>
+public class Mob : InterpolatableEntity, IEqualityComparer<Mob>
 {
     public int Id = 0;
     public int TypeId = 0;
@@ -21,12 +21,29 @@ public record Mob : IEqualityComparer<Mob>
             }
         }
     }
+
     public int EnchantmentLevel = 0;
     public int Rarity = 0;
-    public float PositionX = 0;
-    public float PositionY = 0;
-    public float HX = 0;
-    public float HY = 0;
+    public float PositionX
+    {
+        set
+        {
+            FromX = ToX;
+            ToX = value;
+        }
+        get => ToX;
+    }
+
+    public float PositionY
+    {
+        set
+        {
+            FromY = ToY;
+            ToY = value;
+        }
+        get => ToY;
+    }
+
     public MobTypes Type => MobMapper.Instance.GetMobInfo(TypeId)?.Type ?? MobTypes.Enemy;
     public TierLevels Tier => MobMapper.Instance.GetMobInfo(TypeId)?.Tier ?? TierLevels.Tier1;
 
@@ -41,8 +58,7 @@ public record Mob : IEqualityComparer<Mob>
         {
             return (obj.Id * 397) ^ obj.TypeId.GetHashCode() ^ obj.Experience.GetHashCode() ^
                    (obj.Name?.GetHashCode() ?? 0) ^ obj.EnchantmentLevel.GetHashCode() ^
-                   obj.Rarity.GetHashCode() ^ obj.PositionX.GetHashCode() ^ obj.PositionY.GetHashCode()
-                     ^ obj.HX.GetHashCode() ^ obj.HY.GetHashCode();
+                   obj.Rarity.GetHashCode() ^ obj.CurrentLerpedX.GetHashCode() ^ obj.CurrentLerpedY.GetHashCode();
         }
     }
 }

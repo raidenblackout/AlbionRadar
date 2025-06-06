@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlbionDataParser.cs" />
+    <Compile Include="Entities\InterpolatableEntity.cs" />
     <Compile Include="Entities\Mob.cs" />
     <Compile Include="Entities\MobTypeInfo.cs" />
     <Compile Include="Entities\Player.cs" />

@@ -13,8 +13,8 @@ public static class MobsMapper
             Id = mob.Id,
             TypeId = mob.TypeId,
             Name = mob.Name,
-            PositionX = mob.PositionX,
-            PositionY = mob.PositionY,
+            PositionX = mob.CurrentLerpedX,
+            PositionY = mob.CurrentLerpedY,
             ImageUrl = GetImageUrl(mob),
             EnchantmentLevel = mob.EnchantmentLevel,
         };

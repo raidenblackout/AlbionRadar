@@ -3,10 +3,28 @@ using System.Collections.Generic;
 
 namespace AlbionDataHandlers.Entities;
 
-public record Player : IEqualityComparer<Player>
+public class Player : InterpolatableEntity, IEqualityComparer<Player>
 {   public int Id = 0;
-    public float PositionX = 0;
-    public float PositionY = 0;
+    public float PositionX
+    {
+        set
+        {
+            FromX = ToX;
+            ToX = value;
+        }
+        get => ToX;
+    }
+
+    public float PositionY
+    {
+        set
+        {
+            FromY = ToY;
+            ToY = value;
+        }
+        get => ToY;
+    }
+
     public bool Equals(Player x, Player y)
     {
         return x.Id == y.Id;
