@@ -4,6 +4,7 @@ using System.Windows;
 
 namespace AlbionRadar
 {
+
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
