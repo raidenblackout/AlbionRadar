@@ -49,53 +49,14 @@ namespace AlbionRadar.UserControls
             {
                 foreach (var entity in RadarEntities)
                 {
-
-                    FrameworkElement element = new Ellipse
-                    {
-                        Width = 20,
-                        Height = 20,
-                        Fill = Brushes.Red,
-                        ToolTip = entity.Name
-                    };
-
-                    if (entity.ImageUrl != null && entity.ImageUrl.Length > 0)
-                    {
-                        element = new Image
-                        {
-                            Source = new BitmapImage(new Uri($"pack://application:,,,/AlbionRadar;component/Assets/{entity.ImageUrl}", UriKind.Absolute)),
-                            Width = 40,
-                            Height = 40,
-                            Stretch = Stretch.UniformToFill
-                        };
-                    }
+                    var RadarIcon = new RadarIcon();
+                    RadarIcon.RadarEntity = entity;
 
                     var relativePosition = GetPositionRelativeToPlayer(entity.PositionX, entity.PositionY);
-                    var title = new TextBlock();
-                    title.Text = $"{entity.TypeId}";
-                    title.Foreground = new SolidColorBrush(Colors.Blue);
-
                     var mappedPoints = AlbionMapMapper.RotateWithCenter(relativePosition.Item1, relativePosition.Item2, (float)RadarCanvas.ActualWidth / 2.0f, (float)RadarCanvas.ActualHeight / 2.0f, -45);
-
-                    Canvas.SetLeft(element, mappedPoints.Item1);
-                    Canvas.SetTop(element, mappedPoints.Item2);
-                    if (element is Image)
-                    {
-                        title.InvalidateMeasure();
-                        title.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-                        title.Arrange(new Rect(title.DesiredSize));
-                        double width = title.DesiredSize.Width;
-                        Canvas.SetLeft(title, mappedPoints.Item1 + width/2);
-                        Canvas.SetTop(title, mappedPoints.Item2 + 40);
-                    }
-                    else
-                    {
-                        Canvas.SetLeft(title, mappedPoints.Item1 - title.Text.Length);
-                        Canvas.SetTop(title, mappedPoints.Item2 + 20);
-                    }
-                    
-
-                    RadarCanvas.Children.Add(element);
-                    RadarCanvas.Children.Add(title);
+                    Canvas.SetLeft(RadarIcon, mappedPoints.Item1);
+                    Canvas.SetTop(RadarIcon, mappedPoints.Item2);
+                    RadarCanvas.Children.Add(RadarIcon);
                 }
             }
 

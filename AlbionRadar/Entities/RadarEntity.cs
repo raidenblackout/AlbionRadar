@@ -113,4 +113,18 @@ public class RadarEntity : INotifyPropertyChanged, IEqualityComparer<RadarEntity
             }
         }
     }
+
+    private int _enchantmentLevel = 0;
+    public int EnchantmentLevel
+    {
+        get => _enchantmentLevel;
+        set
+        {
+            if (_enchantmentLevel != value)
+            {
+                _enchantmentLevel = value;
+                OnPropertyChanged();
+            }
+        }
+    }
 }

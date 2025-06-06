@@ -15,7 +15,8 @@ public static class MobsMapper
             Name = mob.Name,
             PositionX = mob.PositionX,
             PositionY = mob.PositionY,
-            ImageUrl = GetImageUrl(mob)
+            ImageUrl = GetImageUrl(mob),
+            EnchantmentLevel = mob.EnchantmentLevel,
         };
         return entity;
     }

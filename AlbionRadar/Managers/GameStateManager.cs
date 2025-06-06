@@ -1,4 +1,5 @@
 ﻿using AlbionDataHandlers.Entities;
+using BaseUtils.Logger.Impl;
 
 namespace AlbionRadar.Managers;
 
@@ -38,7 +39,13 @@ public class GameStateManager
     {
         lock (_stateLock)
         {
-            _mobs = mobs.ToList();
+            try
+            {
+                _mobs = mobs.ToList();
+            }catch(Exception ex)
+            {
+                DLog.I(ex.Message);
+            }
         }
     }
 
