@@ -7,10 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Canvas x:Name="RadarCanvas" Background="Black"  Height="500" Width="500">
-            <Canvas.RenderTransform>
-                <RotateTransform Angle="-45"  CenterX="250" CenterY="250"/>
-            </Canvas.RenderTransform>
+        <Canvas x:Name="RadarCanvas" Background="Black">
         </Canvas>
         <!-- Radar elements will be added here -->
     </Grid>

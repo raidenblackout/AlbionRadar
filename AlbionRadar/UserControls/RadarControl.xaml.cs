@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using AlbionRadar.Mappers;
 
 namespace AlbionRadar.UserControls
 {
@@ -51,8 +52,8 @@ namespace AlbionRadar.UserControls
 
                     FrameworkElement element = new Ellipse
                     {
-                        Width = 10,
-                        Height = 10,
+                        Width = 20,
+                        Height = 20,
                         Fill = Brushes.Red,
                         ToolTip = entity.Name
                     };
@@ -62,8 +63,8 @@ namespace AlbionRadar.UserControls
                         element = new Image
                         {
                             Source = new BitmapImage(new Uri($"pack://application:,,,/AlbionRadar;component/Assets/{entity.ImageUrl}", UriKind.Absolute)),
-                            Width = 50,
-                            Height = 50,
+                            Width = 40,
+                            Height = 40,
                             Stretch = Stretch.UniformToFill
                         };
                     }
@@ -73,12 +74,13 @@ namespace AlbionRadar.UserControls
                     title.Text = $"{entity.Id}" ;
                     title.Foreground = new SolidColorBrush(Colors.Green);
 
-                    Canvas.SetLeft(element, relativePosition.Item1);
-                    Canvas.SetTop(element, relativePosition.Item2);
-                    Canvas.SetLeft(title, relativePosition.Item1-entity.Id.ToString().Length*2);
-                    Canvas.SetTop(title, relativePosition.Item2+4);
+                    var mappedPoints = AlbionMapMapper.RotateWithCenter(relativePosition.Item1, relativePosition.Item2, (float)RadarCanvas.ActualWidth / 2.0f, (float)RadarCanvas.ActualHeight / 2.0f, -45);
 
-                    title.RenderTransform = new RotateTransform(45);
+                    Canvas.SetLeft(element, mappedPoints.Item1);
+                    Canvas.SetTop(element, mappedPoints.Item2);
+                    Canvas.SetLeft(title, mappedPoints.Item1-title.Text.Length);
+                    Canvas.SetTop(title, mappedPoints.Item2+30);
+
                     RadarCanvas.Children.Add(element);
                     RadarCanvas.Children.Add(title);
                 }
