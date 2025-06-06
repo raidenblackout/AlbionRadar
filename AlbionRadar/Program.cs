@@ -1,8 +1,6 @@
 ﻿using AlbionDataHandlers;
 using BaseUtils.Logger.Impl;
 using PacketDotNet;
-using PacketDotNet.Ieee80211;
-using PhotonParser;
 using SharpPcap;
 
 namespace AlbionRadar;
@@ -26,7 +24,7 @@ public class Program
 
         device.StartCapture();
     }
- 
+
     private void PacketHandler(object sender, PacketCapture e)
     {
         RawCapture rawCapture = e.GetPacket();
