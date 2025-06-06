@@ -71,15 +71,28 @@ namespace AlbionRadar.UserControls
 
                     var relativePosition = GetPositionRelativeToPlayer(entity.PositionX, entity.PositionY);
                     var title = new TextBlock();
-                    title.Text = $"{entity.Id}" ;
+                    title.Text = $"{entity.TypeId}";
                     title.Foreground = new SolidColorBrush(Colors.Green);
 
                     var mappedPoints = AlbionMapMapper.RotateWithCenter(relativePosition.Item1, relativePosition.Item2, (float)RadarCanvas.ActualWidth / 2.0f, (float)RadarCanvas.ActualHeight / 2.0f, -45);
 
                     Canvas.SetLeft(element, mappedPoints.Item1);
                     Canvas.SetTop(element, mappedPoints.Item2);
-                    Canvas.SetLeft(title, mappedPoints.Item1-title.Text.Length);
-                    Canvas.SetTop(title, mappedPoints.Item2+30);
+                    if (element is Image)
+                    {
+                        title.InvalidateMeasure();
+                        title.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                        title.Arrange(new Rect(title.DesiredSize)); // This is the key addition
+                        double width = title.DesiredSize.Width;
+                        Canvas.SetLeft(title, mappedPoints.Item1 + width/2);
+                        Canvas.SetTop(title, mappedPoints.Item2 + 40);
+                    }
+                    else
+                    {
+                        Canvas.SetLeft(title, mappedPoints.Item1 - title.Text.Length);
+                        Canvas.SetTop(title, mappedPoints.Item2 + 20);
+                    }
+                    
 
                     RadarCanvas.Children.Add(element);
                     RadarCanvas.Children.Add(title);
