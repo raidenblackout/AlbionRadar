@@ -15,7 +15,7 @@ public class Mob : InterpolatableEntity, IEqualityComparer<Mob>
         get => string.IsNullOrEmpty(_name) ? MobMapper.Instance.GetMobInfo(TypeId)?.Name ?? _name : _name;
         set
         {
-            if (string.IsNullOrEmpty(value))
+            if (!string.IsNullOrEmpty(value))
             {
                 _name = value;
             }
