@@ -38,9 +38,10 @@ For users who prefer not to build the project from source, you can download the 
     * **Network Adapter Selection**: The first time you run AlbionRadar, it will prompt you to select your network adapter for packet capture.
         * **For Wi-Fi Users**: Select your active **Wi-Fi adapter**.
         * **For Ethernet Users**: Select your active **Ethernet adapter**.
-        * ![Network Adapter Selection Prompt](https://github.com/raidenblackout/AlbionRadar/blob/main/Assets/PacketDeviceSelectorDialogue.png?raw=true)
+        ![Network Adapter Selection Prompt](https://github.com/raidenblackout/AlbionRadar/blob/main/Assets/PacketDeviceSelectorDialogue.png?raw=true)
         * Upon successful selection, AlbionRadar should launch its separate information overlay window.
-        * ![AlbionRadar In-Game Overlay](https://github.com/raidenblackout/AlbionRadar/blob/main/Assets/AlbionRader.png?raw=true) ### Option 2: Build from Source (For Developers)
+        ![AlbionRadar In-Game Overlay](https://github.com/raidenblackout/AlbionRadar/blob/main/Assets/AlbionRader.png?raw=true)
+### Option 2: Build from Source (For Developers)
 
 If you are a developer and wish to contribute or modify the project, you can build it from the source code:
 
