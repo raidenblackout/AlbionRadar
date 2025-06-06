@@ -17,5 +17,3 @@ Fixes # (issue)
 - [ ] I have tested my code
 - [ ] I have reviewed my code
 - [ ] I have added/updated documentation as needed
-
-#### Issue Reference (If Any): [ID](URL)
