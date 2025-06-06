@@ -1,6 +1,5 @@
 ﻿using AlbionDataHandlers.Entities;
 using AlbionDataHandlers.Enums;
-using AlbionDataHandlers.Utils;
 using BaseUtils.Logger.Impl;
 using System;
 using System.Collections.Generic;
@@ -10,12 +9,12 @@ namespace AlbionDataHandlers.Handlers;
 
 public class PlayersHandler : IEventHandler
 {
-    private Player _player = new Player();
+    private readonly Player _player = new Player();
     public ISubject<Player> Player { get; } = new Subject<Player>();
 
     public void OnEvent(EventCodes eventCode, Dictionary<byte, object> parameters)
     {
-        switch(eventCode)
+        switch (eventCode)
         {
             case EventCodes.Leave:
                 HandleLeave(parameters);
@@ -40,66 +39,111 @@ public class PlayersHandler : IEventHandler
             case EventCodes.Mounted:
                 HandleMounted(parameters);
                 break;
+
+            default:
+                DLog.I($"Unhandled event code: {eventCode}");
+                break;
         }
     }
 
     private void HandleMounted(Dictionary<byte, object> parameters)
     {
-
+        // Implementation for handling mounted event
     }
 
     private void HandleCharacterEquipmentChanged(Dictionary<byte, object> parameters)
     {
-
+        // Implementation for handling character equipment change
     }
 
     private void HandleHealthUpdate(Dictionary<byte, object> parameters)
     {
-
+        // Implementation for handling health update
     }
 
     private void HandleRegenerationHealthChanged(Dictionary<byte, object> parameters)
     {
-
+        // Implementation for handling regeneration health change
     }
 
     private void HandleNewCharacter(Dictionary<byte, object> parameters)
     {
-        
+        // Implementation for handling new character creation
     }
 
     private void HandleLeave(Dictionary<byte, object> parameters)
     {
-        if (!int.TryParse(parameters[0].ToString(), out int playerId)) return;
+        if (parameters.TryGetValue(0, out var playerIdObj) && int.TryParse(playerIdObj.ToString(), out int playerId))
+        {
+            DLog.I($"Player with ID {playerId} has left.");
+            // Additional logic for handling player leave
+        }
+        else
+        {
+            DLog.I("Invalid player ID in Leave event.");
+        }
     }
 
     private bool Remove(string id)
     {
+        // Implementation for removing a player by ID
         return true;
     }
 
     public void OnRequest(RequestCodes requestCode, Dictionary<byte, object> parameters)
     {
-        switch(requestCode)
+        switch (requestCode)
         {
             case RequestCodes.PlayerMoving:
                 HandlePlayerMoving(parameters);
                 break;
 
+            default:
+                DLog.I($"Unhandled request code: {requestCode}");
+                break;
         }
     }
 
     private void HandlePlayerMoving(Dictionary<byte, object> parameters)
     {
-        var location = parameters[1] as Array;
-        float posX = float.Parse(location.GetValue(0).ToString());
-        float posY = float.Parse(location.GetValue(1).ToString());
+        if (parameters.TryGetValue(1, out var locationObj) && locationObj is Array location)
+        {
+            if (float.TryParse(location.GetValue(0)?.ToString(), out float posX) &&
+                float.TryParse(location.GetValue(1)?.ToString(), out float posY))
+            {
+                _player.PositionX = posX;
+                _player.PositionY = posY;
 
-        _player.PositionX = posX;
-        _player.PositionY = posY;
+                DLog.I($"Player moved to position: ({posX}, {posY})");
+                Player.OnNext(_player);
+            }
+            else
+            {
+                DLog.I("Invalid position data in PlayerMoving request.");
+            }
+        }
+        else
+        {
+            DLog.I("Invalid location data in PlayerMoving request.");
+        }
+    }
 
-        DLog.I($"Player moved to position: ({posX}, {posY})");
+    public void OnResponse(ResponseCodes responseCode, Dictionary<byte, object> parameters)
+    {
+        switch (responseCode)
+        {
+            case ResponseCodes.PlayerJoiningMap:
+                HandlePlayerJoiningMap(parameters);
+                break;
 
-        Player.OnNext(_player);
+            default:
+                DLog.I($"Unhandled response code: {responseCode}");
+                break;
+        }
+    }
+
+    private void HandlePlayerJoiningMap(Dictionary<byte, object> parameters)
+    {
+        // Implementation for handling player joining map
     }
 }

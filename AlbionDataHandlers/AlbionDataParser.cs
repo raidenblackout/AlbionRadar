@@ -76,7 +76,7 @@ public class AlbionDataParser : PhotonParser.PhotonParser
     protected override void OnResponse(byte operationCode, short returnCode, string debugMessage, Dictionary<byte, object> parameters)
     {
         //throw new System.NotImplementedException();
-        if (!parameters.TryGetValue(252, out var val) || val == null)
+        if (!parameters.TryGetValue(253, out var val) || val == null)
         {
             DLog.I($"Failed To get Value {string.Join(", ", parameters)}");
             return;
@@ -87,18 +87,22 @@ public class AlbionDataParser : PhotonParser.PhotonParser
             return;
         }
 
-        EventCodes eventCode;
+        ResponseCodes eventCode;
         try
         {
-            eventCode = (EventCodes)integerCode;
+            eventCode = (ResponseCodes)integerCode;
         }
         catch
         {
             DLog.I($"Failed with {integerCode}");
-            return; // Ignore invalid event codes
+            return; // Ignore invalid response codes
         }
 
         DLog.I($"Received event code: {eventCode} with parameters: {string.Join(", ", parameters)}");
 
+        _eventHandlers.ForEach(handler =>
+        {
+            Task.Run(() => handler.OnResponse(eventCode, parameters));
+        });
     }
 }

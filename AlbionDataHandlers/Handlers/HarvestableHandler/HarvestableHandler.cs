@@ -5,14 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Subjects;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AlbionDataHandlers.Handlers;
 
 public class HarvestableHandler : IEventHandler
 {
-    private object _lockObject = new object();
+    private readonly object _lockObject = new();
     private readonly IList<Harvestable> _harvestables = new List<Harvestable>();
 
     public ISubject<IEnumerable<Harvestable>> Harvestables { get; } = new Subject<IEnumerable<Harvestable>>();
@@ -24,6 +22,7 @@ public class HarvestableHandler : IEventHandler
             case EventCodes.NewHarvestableObject:
                 HandleNewHarvestable(parameters);
                 break;
+
             case EventCodes.HarvestableChangeState:
                 HandleHarvestableChangeState(parameters);
                 break;
@@ -34,25 +33,24 @@ public class HarvestableHandler : IEventHandler
     {
         var id = EventHandlerUtils.ExtractValue<int>(parameters, 0);
 
-        if(!parameters.TryGetValue(1, out var val))
+        if (!parameters.TryGetValue(1, out _))
         {
             lock (_lockObject)
             {
-                _harvestables.Remove(_harvestables.FirstOrDefault(h => h.Id == id));
-                Harvestables.OnNext(_harvestables);
+                var harvestableToRemove = _harvestables.FirstOrDefault(h => h.Id == id);
+                if (harvestableToRemove != null)
+                {
+                    _harvestables.Remove(harvestableToRemove);
+                    Harvestables.OnNext(_harvestables);
+                }
             }
             return;
         }
 
         var harvestable = _harvestables.FirstOrDefault(h => h.Id == id);
-
-        if(harvestable == null)
-        {
-            return; // Harvestable not found, nothing to update
-        }
+        if (harvestable == null) return;
 
         var size = EventHandlerUtils.ExtractValue<int>(parameters, 1, 0);
-
         harvestable.Size = size;
 
         lock (_lockObject)
@@ -61,18 +59,21 @@ public class HarvestableHandler : IEventHandler
         }
     }
 
-
     private void HandleNewHarvestable(Dictionary<byte, object> parameters)
     {
         var id = EventHandlerUtils.ExtractValue<int>(parameters, 0);
         var type = EventHandlerUtils.ExtractValue<int>(parameters, 5);
         var tier = EventHandlerUtils.ExtractValue<int>(parameters, 7);
         var location = parameters[8] as Array;
-        float posX = float.Parse(location.GetValue(0).ToString());
-        float posY = float.Parse(location.GetValue(1).ToString());
+
+        if (location == null || location.Length < 2) return;
+
+        var posX = float.Parse(location.GetValue(0)?.ToString() ?? "0");
+        var posY = float.Parse(location.GetValue(1)?.ToString() ?? "0");
 
         var enchantmentLevel = EventHandlerUtils.ExtractValue<int>(parameters, 11, 0);
         var size = EventHandlerUtils.ExtractValue<int>(parameters, 10, 0);
+
         var harvestable = new Harvestable
         {
             Id = id,
@@ -86,26 +87,35 @@ public class HarvestableHandler : IEventHandler
 
         lock (_lockObject)
         {
-            if (!_harvestables.Any(h => h.Id == harvestable.Id))
+            var existingHarvestable = _harvestables.FirstOrDefault(h => h.Id == harvestable.Id);
+            if (existingHarvestable != null)
             {
-                _harvestables.Add(harvestable);
-                Harvestables.OnNext(_harvestables);
+                _harvestables.Remove(existingHarvestable);
             }
-            else
-            {
-                var existingHarvestable = _harvestables.FirstOrDefault(h => h.Id == harvestable.Id);
-                if (existingHarvestable != null)
-                {
-                    _harvestables.Remove(existingHarvestable);
-                }
-                _harvestables.Add(harvestable);
-                Harvestables.OnNext(_harvestables);
-            }
+
+            _harvestables.Add(harvestable);
+            Harvestables.OnNext(_harvestables);
         }
     }
 
     public void OnRequest(RequestCodes requestCode, Dictionary<byte, object> parameters)
     {
+        // No implementation needed for now
+    }
 
+    public void OnResponse(ResponseCodes responseCode, Dictionary<byte, object> parameters)
+    {
+        if (responseCode == ResponseCodes.PlayerJoiningMap)
+        {
+            HandlePlayerJoiningMap();
+        }
+    }
+
+    private void HandlePlayerJoiningMap()
+    {
+        lock (_lockObject)
+        {
+            _harvestables.Clear();
+        }
     }
 }

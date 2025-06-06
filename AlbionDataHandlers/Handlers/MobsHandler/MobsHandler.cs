@@ -2,7 +2,6 @@
 using AlbionDataHandlers.Enums;
 using AlbionDataHandlers.Utils;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Subjects;
@@ -11,7 +10,7 @@ namespace AlbionDataHandlers.Handlers;
 
 public class MobsHandler : IEventHandler
 {
-    private object _lockObject = new object();
+    private readonly object _lockObject = new();
     private readonly IList<Mob> _mobs = new List<Mob>();
     public ISubject<IEnumerable<Mob>> Mobs { get; } = new Subject<IEnumerable<Mob>>();
 
@@ -42,7 +41,8 @@ public class MobsHandler : IEventHandler
         float posY = float.Parse(location.GetValue(1).ToString());
 
         float experience = EventHandlerUtils.ExtractValue<float>(parameters, 13, 0);
-        string name = EventHandlerUtils.ExtractValue<string>(parameters, 32) ?? EventHandlerUtils.ExtractValue<string>(parameters, 31);
+        string name = EventHandlerUtils.ExtractValue<string>(parameters, 32)
+                      ?? EventHandlerUtils.ExtractValue<string>(parameters, 31);
         int enchantmentLevel = EventHandlerUtils.ExtractValue<int>(parameters, 33, 0);
         int rarity = EventHandlerUtils.ExtractValue<int>(parameters, 34, 0);
 
@@ -58,23 +58,16 @@ public class MobsHandler : IEventHandler
             PositionY = posY
         };
 
-        if (!_mobs.Contains(mob))
+        lock (_lockObject)
         {
+            var existingMob = _mobs.FirstOrDefault(m => m.Id == mob.Id);
+            if (existingMob != null)
+            {
+                _mobs.Remove(existingMob);
+            }
+
             _mobs.Add(mob);
             Mobs.OnNext(_mobs);
-        }
-        else
-        {
-            lock (_lockObject)
-            {
-                var existingMob = _mobs.FirstOrDefault(m => m.Id == mob.Id);
-                if (existingMob != null)
-                {
-                    _mobs.Remove(existingMob);
-                }
-                _mobs.Add(mob);
-                Mobs.OnNext(_mobs);
-            }
         }
     }
 
@@ -83,6 +76,7 @@ public class MobsHandler : IEventHandler
         int id = int.Parse(parameters[0].ToString());
         float posX = EventHandlerUtils.ExtractValue<float>(parameters, 4);
         float posY = EventHandlerUtils.ExtractValue<float>(parameters, 5);
+
         lock (_lockObject)
         {
             var mobToUpdate = _mobs.FirstOrDefault(m => m.Id == id);
@@ -98,6 +92,7 @@ public class MobsHandler : IEventHandler
     private void HandleLeave(Dictionary<byte, object> parameters)
     {
         int id = int.Parse(parameters[0].ToString());
+
         lock (_lockObject)
         {
             var mobToRemove = _mobs.FirstOrDefault(m => m.Id == id);
@@ -111,7 +106,22 @@ public class MobsHandler : IEventHandler
 
     public void OnRequest(RequestCodes requestCode, Dictionary<byte, object> parameters)
     {
+        // No implementation required for OnRequest in the current context
     }
 
+    public void OnResponse(ResponseCodes responseCode, Dictionary<byte, object> parameters)
+    {
+        if (responseCode == ResponseCodes.PlayerJoiningMap)
+        {
+            HandlePlayerJoiningMap(parameters);
+        }
+    }
 
+    private void HandlePlayerJoiningMap(Dictionary<byte, object> parameters)
+    {
+        lock (_lockObject)
+        {
+            _mobs.Clear();
+        }
+    }
 }

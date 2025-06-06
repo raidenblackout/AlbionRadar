@@ -91,10 +91,10 @@
     <Compile Include="Enums\MobTypes.cs" />
     <Compile Include="Enums\EventCodes.cs" />
     <Compile Include="Enums\RequestCodes.cs" />
+    <Compile Include="Enums\ResponseCodes.cs" />
     <Compile Include="Enums\TierLevels.cs" />
     <Compile Include="Handlers\HarvestableHandler\HarvestableHandler.cs" />
     <Compile Include="Handlers\IEventHandler.cs" />
-    <Compile Include="Handlers\IRequestHandler.cs" />
     <Compile Include="Handlers\MobsHandler\MobsHandler.cs" />
     <Compile Include="Handlers\PlayersHandler\PlayersHandler.cs" />
     <Compile Include="Mappers\MobMapper.cs" />
