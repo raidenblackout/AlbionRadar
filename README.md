@@ -38,8 +38,8 @@ For users who prefer not to build the project from source, you can download the 
     * **Network Adapter Selection**: The first time you run AlbionRadar, it will prompt you to select your network adapter for packet capture.
         * **For Wi-Fi Users**: Select your active **Wi-Fi adapter**.
         * **For Ethernet Users**: Select your active **Ethernet adapter**.
-        * ![Network Adapter Selection Prompt](path/to/network-adapter-selection-prompt.png) * Upon successful selection, AlbionRadar should launch its separate information overlay window.
-    * ![AlbionRadar In-Game Overlay](path/to/albionradar-in-game-overlay.png) ### Option 2: Build from Source (For Developers)
+        * ![Network Adapter Selection Prompt](https://github.com/raidenblackout/AlbionRadar/blob/main/Assets/PacketDeviceSelectorDialogue.png?raw=true) * Upon successful selection, AlbionRadar should launch its separate information overlay window.
+    * ![AlbionRadar In-Game Overlay](https://github.com/raidenblackout/AlbionRadar/blob/main/Assets/AlbionRader.png?raw=true) ### Option 2: Build from Source (For Developers)
 
 If you are a developer and wish to contribute or modify the project, you can build it from the source code:
 
@@ -65,7 +65,7 @@ If you are a developer and wish to contribute or modify the project, you can bui
     * **Network Adapter Selection**: The first time you run AlbionRadar, it will prompt you to select your network adapter for packet capture.
         * **For Wi-Fi Users**: Select your active **Wi-Fi adapter**.
         * **For Ethernet Users**: Select your active **Ethernet adapter**.
-        * ![Network Adapter Selection Prompt](path/to/network-adapter-selection-prompt.png) * Upon successful execution, AlbionRadar should launch its separate information overlay window.
+        * ![Network Adapter Selection Prompt](https://github.com/raidenblackout/AlbionRadar/blob/main/Assets/PacketDeviceSelectorDialogue.png?raw=true) * Upon successful execution, AlbionRadar should launch its separate information overlay window.
 
 ## Disclaimer
 
