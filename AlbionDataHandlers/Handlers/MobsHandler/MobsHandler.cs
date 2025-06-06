@@ -65,13 +65,16 @@ public class MobsHandler : IEventHandler
         }
         else
         {
-            var existingMob = _mobs.FirstOrDefault(m => m.Id == mob.Id);
-            if (existingMob != null)
+            lock (_lockObject)
             {
-                _mobs.Remove(existingMob);
+                var existingMob = _mobs.FirstOrDefault(m => m.Id == mob.Id);
+                if (existingMob != null)
+                {
+                    _mobs.Remove(existingMob);
+                }
+                _mobs.Add(mob);
+                Mobs.OnNext(_mobs);
             }
-            _mobs.Add(mob);
-            Mobs.OnNext(_mobs);
         }
     }
 
@@ -80,13 +83,15 @@ public class MobsHandler : IEventHandler
         int id = int.Parse(parameters[0].ToString());
         float posX = EventHandlerUtils.ExtractValue<float>(parameters, 4);
         float posY = EventHandlerUtils.ExtractValue<float>(parameters, 5);
-
-        var mobToUpdate = _mobs.FirstOrDefault(m => m.Id == id);
-        if (mobToUpdate != null)
+        lock (_lockObject)
         {
-            mobToUpdate.PositionX = posX;
-            mobToUpdate.PositionY = posY;
-            Mobs.OnNext(_mobs);
+            var mobToUpdate = _mobs.FirstOrDefault(m => m.Id == id);
+            if (mobToUpdate != null)
+            {
+                mobToUpdate.PositionX = posX;
+                mobToUpdate.PositionY = posY;
+                Mobs.OnNext(_mobs);
+            }
         }
     }
 

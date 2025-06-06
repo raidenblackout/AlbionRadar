@@ -72,7 +72,7 @@ namespace AlbionRadar.UserControls
                     var relativePosition = GetPositionRelativeToPlayer(entity.PositionX, entity.PositionY);
                     var title = new TextBlock();
                     title.Text = $"{entity.TypeId}";
-                    title.Foreground = new SolidColorBrush(Colors.Green);
+                    title.Foreground = new SolidColorBrush(Colors.Blue);
 
                     var mappedPoints = AlbionMapMapper.RotateWithCenter(relativePosition.Item1, relativePosition.Item2, (float)RadarCanvas.ActualWidth / 2.0f, (float)RadarCanvas.ActualHeight / 2.0f, -45);
 
@@ -103,7 +103,7 @@ namespace AlbionRadar.UserControls
             {
                 Width = 10,
                 Height = 10,
-                Fill = Brushes.Blue,
+                Fill = Brushes.Brown,
             };
 
             Canvas.SetLeft(mainPlayer, RadarCanvas.ActualWidth / 2.0);

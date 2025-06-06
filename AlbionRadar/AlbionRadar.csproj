@@ -30,6 +30,7 @@
     <None Remove="Assets\Enemies\MiniBoss\KEEPERGIANTMINIBOSS.png" />
     <None Remove="Assets\Enemies\Normal\KEEPERUNPROVENFEMALE.png" />
     <None Remove="Assets\Enemies\Normal\KEEPERUNPROVENMALE.png" />
+    <None Remove="Assets\favicon.ico" />
     <None Remove="Assets\Flags\BRIDGEWATCH.png" />
     <None Remove="Assets\Flags\CAERLEON.png" />
     <None Remove="Assets\Flags\FORTSTERLING.png" />
@@ -260,6 +261,9 @@
     </Content>
     <Content Include="Assets\Enemies\Normal\KEEPERUNPROVENFEMALE.png" />
     <Content Include="Assets\Enemies\Normal\KEEPERUNPROVENMALE.png" />
+    <Content Include="Assets\favicon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Flags\BRIDGEWATCH.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -776,6 +780,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="2.0.1" />
     <PackageReference Include="PhotonPackageParser" Version="4.1.0" />
     <PackageReference Include="SharpPcap" Version="6.3.1" />
     <PackageReference Include="System.Reactive" Version="6.0.1" />
