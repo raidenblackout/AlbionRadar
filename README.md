@@ -67,7 +67,8 @@ If you are a developer and wish to contribute or modify the project, you can bui
     * **Network Adapter Selection**: The first time you run AlbionRadar, it will prompt you to select your network adapter for packet capture.
         * **For Wi-Fi Users**: Select your active **Wi-Fi adapter**.
         * **For Ethernet Users**: Select your active **Ethernet adapter**.
-        * ![Network Adapter Selection Prompt](https://github.com/raidenblackout/AlbionRadar/blob/main/Assets/PacketDeviceSelectorDialogue.png?raw=true) * Upon successful execution, AlbionRadar should launch its separate information overlay window.
+        ![Network Adapter Selection Prompt](https://github.com/raidenblackout/AlbionRadar/blob/main/Assets/PacketDeviceSelectorDialogue.png?raw=true)
+        * Upon successful execution, AlbionRadar should launch its separate information overlay window.
 
 ## Disclaimer
 
