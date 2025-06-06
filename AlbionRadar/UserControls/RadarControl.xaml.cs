@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace AlbionRadar.UserControls
@@ -47,25 +48,38 @@ namespace AlbionRadar.UserControls
             {
                 foreach (var entity in RadarEntities)
                 {
-                    var ellipse = new Ellipse
+
+                    FrameworkElement element = new Ellipse
                     {
                         Width = 10,
                         Height = 10,
                         Fill = Brushes.Red,
                         ToolTip = entity.Name
                     };
+
+                    if (entity.ImageUrl != null && entity.ImageUrl.Length > 0)
+                    {
+                        element = new Image
+                        {
+                            Source = new BitmapImage(new Uri($"pack://application:,,,/AlbionRadar;component/Assets/{entity.ImageUrl}", UriKind.Absolute)),
+                            Width = 50,
+                            Height = 50,
+                            Stretch = Stretch.UniformToFill
+                        };
+                    }
+
                     var relativePosition = GetPositionRelativeToPlayer(entity.PositionX, entity.PositionY);
                     var title = new TextBlock();
                     title.Text = $"{entity.Id}" ;
                     title.Foreground = new SolidColorBrush(Colors.Green);
 
-                    Canvas.SetLeft(ellipse, relativePosition.Item1);
-                    Canvas.SetTop(ellipse, relativePosition.Item2);
+                    Canvas.SetLeft(element, relativePosition.Item1);
+                    Canvas.SetTop(element, relativePosition.Item2);
                     Canvas.SetLeft(title, relativePosition.Item1-entity.Id.ToString().Length*2);
                     Canvas.SetTop(title, relativePosition.Item2+4);
 
                     title.RenderTransform = new RotateTransform(45);
-                    RadarCanvas.Children.Add(ellipse);
+                    RadarCanvas.Children.Add(element);
                     RadarCanvas.Children.Add(title);
                 }
             }
@@ -91,8 +105,8 @@ namespace AlbionRadar.UserControls
             // Rotate the position by 90 degrees clockwise around the main player  
             float deltaX = x - MainPlayer.PositionX;
             float deltaY = y - MainPlayer.PositionY;
-            float rotatedX = deltaY*2f;
-            float rotatedY = deltaX*2f;
+            float rotatedX = deltaY*5f;
+            float rotatedY = deltaX*5f;
 
             float relativeX = rotatedX + (float)RadarCanvas.ActualWidth / 2.0f;
             float relativeY = rotatedY + (float)RadarCanvas.ActualHeight / 2.0f;

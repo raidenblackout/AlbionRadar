@@ -11,6 +11,8 @@ using System.Reactive.Concurrency;
 using System;
 using AlbionRadar.Managers;
 using System.Windows.Threading;
+using AlbionDataHandlers.Mappers;
+using AlbionRadar.Mappers;
 
 namespace AlbionRadar.ViewModels;
 
@@ -77,14 +79,7 @@ public class MainViewModel : INotifyPropertyChanged
 
         var mobState = _gameStateManager.CurrentMobs;
 
-        var newUiEntities = mobState.Select(mob => new RadarEntity
-        {
-            Id = mob.Id,
-            Name = mob.Name,
-            PositionX = mob.PositionX,
-            PositionY = mob.PositionY,
-            TypeId = mob.TypeId,
-        });
+        var newUiEntities = mobState.Select(mob => mob.ToRadarEntity()).OfType<RadarEntity>();
 
         RadarEntities = new ObservableCollection<RadarEntity>(newUiEntities);
     }

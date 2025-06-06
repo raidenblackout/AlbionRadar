@@ -99,4 +99,18 @@ public class RadarEntity : INotifyPropertyChanged, IEqualityComparer<RadarEntity
             }
         }
     }
+
+    private string? _imageUrl = string.Empty;
+    public string? ImageUrl
+    {
+        get => _imageUrl;
+        set
+        {
+            if (_imageUrl != value)
+            {
+                _imageUrl = value;
+                OnPropertyChanged();
+            }
+        }
+    }
 }

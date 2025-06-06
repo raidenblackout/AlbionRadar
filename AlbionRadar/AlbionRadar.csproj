@@ -10,6 +10,772 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Enemies\Boss\KEEPERAXETHROWERBOSS.png" />
+    <None Remove="Assets\Enemies\Boss\KEEPERBERSERKBOSS.png" />
+    <None Remove="Assets\Enemies\Boss\KEEPERDRUIDBOSSSEER.png" />
+    <None Remove="Assets\Enemies\Boss\KEEPEREARTHDAUGHTERBOSS.png" />
+    <None Remove="Assets\Enemies\Boss\KEEPERGIANTBOSSANCIENT.png" />
+    <None Remove="Assets\Enemies\Enchanted\KEEPERAXETHROWER.png" />
+    <None Remove="Assets\Enemies\Enchanted\KEEPERBERSERK.png" />
+    <None Remove="Assets\Enemies\Enchanted\KEEPERDRUID.png" />
+    <None Remove="Assets\Enemies\Enchanted\KEEPERGIANT.png" />
+    <None Remove="Assets\Enemies\Medium\KEEPERAXETHROWER.png" />
+    <None Remove="Assets\Enemies\Medium\KEEPERBEAR.png" />
+    <None Remove="Assets\Enemies\Medium\KEEPERBERSERK.png" />
+    <None Remove="Assets\Enemies\Medium\KEEPERDRUID.png" />
+    <None Remove="Assets\Enemies\Medium\KEEPERMUSHROOMTHROWER.png" />
+    <None Remove="Assets\Enemies\MiniBoss\KEEPERAXETHROWERMINIBOSS.png" />
+    <None Remove="Assets\Enemies\MiniBoss\KEEPERBERSERKMINIBOSS.png" />
+    <None Remove="Assets\Enemies\MiniBoss\KEEPERDRUIDMINIBOSS.png" />
+    <None Remove="Assets\Enemies\MiniBoss\KEEPERGIANTMINIBOSS.png" />
+    <None Remove="Assets\Enemies\Normal\KEEPERUNPROVENFEMALE.png" />
+    <None Remove="Assets\Enemies\Normal\KEEPERUNPROVENMALE.png" />
+    <None Remove="Assets\Flags\BRIDGEWATCH.png" />
+    <None Remove="Assets\Flags\CAERLEON.png" />
+    <None Remove="Assets\Flags\FORTSTERLING.png" />
+    <None Remove="Assets\Flags\FRIENDLY.png" />
+    <None Remove="Assets\Flags\HOSTILE.png" />
+    <None Remove="Assets\Flags\LYMHURST.png" />
+    <None Remove="Assets\Flags\MARTLOCK.png" />
+    <None Remove="Assets\Flags\THETFORD.png" />
+    <None Remove="Assets\Resources\AVALONMINIONCHEST.png" />
+    <None Remove="Assets\Resources\blue.png" />
+    <None Remove="Assets\Resources\cage.png" />
+    <None Remove="Assets\Resources\corrupt.png" />
+    <None Remove="Assets\Resources\CRYSTALSPIDER.png" />
+    <None Remove="Assets\Resources\dungeon_0.png" />
+    <None Remove="Assets\Resources\dungeon_1.png" />
+    <None Remove="Assets\Resources\dungeon_2.png" />
+    <None Remove="Assets\Resources\dungeon_3.png" />
+    <None Remove="Assets\Resources\dungeon_4.png" />
+    <None Remove="Assets\Resources\EVENTEASTERCHEST1.png" />
+    <None Remove="Assets\Resources\EVENTEASTERCHEST2.png" />
+    <None Remove="Assets\Resources\FAIRYDRAGON.png" />
+    <None Remove="Assets\Resources\fiber_2_0.png" />
+    <None Remove="Assets\Resources\fiber_3_0.png" />
+    <None Remove="Assets\Resources\fiber_4_0.png" />
+    <None Remove="Assets\Resources\fiber_4_1.png" />
+    <None Remove="Assets\Resources\fiber_4_2.png" />
+    <None Remove="Assets\Resources\fiber_4_3.png" />
+    <None Remove="Assets\Resources\fiber_4_4.png" />
+    <None Remove="Assets\Resources\fiber_5_0.png" />
+    <None Remove="Assets\Resources\fiber_5_1.png" />
+    <None Remove="Assets\Resources\fiber_5_2.png" />
+    <None Remove="Assets\Resources\fiber_5_3.png" />
+    <None Remove="Assets\Resources\fiber_5_4.png" />
+    <None Remove="Assets\Resources\fiber_6_0.png" />
+    <None Remove="Assets\Resources\fiber_6_1.png" />
+    <None Remove="Assets\Resources\fiber_6_2.png" />
+    <None Remove="Assets\Resources\fiber_6_3.png" />
+    <None Remove="Assets\Resources\fiber_6_4.png" />
+    <None Remove="Assets\Resources\fiber_7_0.png" />
+    <None Remove="Assets\Resources\fiber_7_1.png" />
+    <None Remove="Assets\Resources\fiber_7_2.png" />
+    <None Remove="Assets\Resources\fiber_7_3.png" />
+    <None Remove="Assets\Resources\fiber_7_4.png" />
+    <None Remove="Assets\Resources\fiber_8_0.png" />
+    <None Remove="Assets\Resources\fiber_8_1.png" />
+    <None Remove="Assets\Resources\fiber_8_2.png" />
+    <None Remove="Assets\Resources\fiber_8_3.png" />
+    <None Remove="Assets\Resources\fiber_8_4.png" />
+    <None Remove="Assets\Resources\fish.png" />
+    <None Remove="Assets\Resources\green.png" />
+    <None Remove="Assets\Resources\GRIFFIN.png" />
+    <None Remove="Assets\Resources\group_0.png" />
+    <None Remove="Assets\Resources\group_1.png" />
+    <None Remove="Assets\Resources\group_2.png" />
+    <None Remove="Assets\Resources\group_3.png" />
+    <None Remove="Assets\Resources\group_4.png" />
+    <None Remove="Assets\Resources\hellgate.png" />
+    <None Remove="Assets\Resources\hide_1_0.png" />
+    <None Remove="Assets\Resources\hide_2_0.png" />
+    <None Remove="Assets\Resources\hide_3_0.png" />
+    <None Remove="Assets\Resources\hide_4_0.png" />
+    <None Remove="Assets\Resources\hide_4_1.png" />
+    <None Remove="Assets\Resources\hide_4_2.png" />
+    <None Remove="Assets\Resources\hide_4_3.png" />
+    <None Remove="Assets\Resources\hide_4_4.png" />
+    <None Remove="Assets\Resources\hide_5_0.png" />
+    <None Remove="Assets\Resources\hide_5_1.png" />
+    <None Remove="Assets\Resources\hide_5_2.png" />
+    <None Remove="Assets\Resources\hide_5_3.png" />
+    <None Remove="Assets\Resources\hide_5_4.png" />
+    <None Remove="Assets\Resources\hide_6_0.png" />
+    <None Remove="Assets\Resources\hide_6_1.png" />
+    <None Remove="Assets\Resources\hide_6_2.png" />
+    <None Remove="Assets\Resources\hide_6_3.png" />
+    <None Remove="Assets\Resources\hide_6_4.png" />
+    <None Remove="Assets\Resources\hide_7_0.png" />
+    <None Remove="Assets\Resources\hide_7_1.png" />
+    <None Remove="Assets\Resources\hide_7_2.png" />
+    <None Remove="Assets\Resources\hide_7_3.png" />
+    <None Remove="Assets\Resources\hide_7_4.png" />
+    <None Remove="Assets\Resources\hide_8_0.png" />
+    <None Remove="Assets\Resources\hide_8_1.png" />
+    <None Remove="Assets\Resources\hide_8_2.png" />
+    <None Remove="Assets\Resources\hide_8_3.png" />
+    <None Remove="Assets\Resources\hide_8_4.png" />
+    <None Remove="Assets\Resources\legendary.png" />
+    <None Remove="Assets\Resources\Logs_1_0.png" />
+    <None Remove="Assets\Resources\Logs_2_0.png" />
+    <None Remove="Assets\Resources\Logs_3_0.png" />
+    <None Remove="Assets\Resources\Logs_4_0.png" />
+    <None Remove="Assets\Resources\Logs_4_1.png" />
+    <None Remove="Assets\Resources\Logs_4_2.png" />
+    <None Remove="Assets\Resources\Logs_4_3.png" />
+    <None Remove="Assets\Resources\Logs_4_4.png" />
+    <None Remove="Assets\Resources\Logs_5_0.png" />
+    <None Remove="Assets\Resources\Logs_5_1.png" />
+    <None Remove="Assets\Resources\Logs_5_2.png" />
+    <None Remove="Assets\Resources\Logs_5_3.png" />
+    <None Remove="Assets\Resources\Logs_5_4.png" />
+    <None Remove="Assets\Resources\Logs_6_0.png" />
+    <None Remove="Assets\Resources\Logs_6_1.png" />
+    <None Remove="Assets\Resources\Logs_6_2.png" />
+    <None Remove="Assets\Resources\Logs_6_3.png" />
+    <None Remove="Assets\Resources\Logs_6_4.png" />
+    <None Remove="Assets\Resources\Logs_7_0.png" />
+    <None Remove="Assets\Resources\Logs_7_1.png" />
+    <None Remove="Assets\Resources\Logs_7_2.png" />
+    <None Remove="Assets\Resources\Logs_7_3.png" />
+    <None Remove="Assets\Resources\Logs_7_4.png" />
+    <None Remove="Assets\Resources\Logs_8_0.png" />
+    <None Remove="Assets\Resources\Logs_8_1.png" />
+    <None Remove="Assets\Resources\Logs_8_2.png" />
+    <None Remove="Assets\Resources\Logs_8_3.png" />
+    <None Remove="Assets\Resources\Logs_8_4.png" />
+    <None Remove="Assets\Resources\mist_0.png" />
+    <None Remove="Assets\Resources\mist_1.png" />
+    <None Remove="Assets\Resources\mist_2.png" />
+    <None Remove="Assets\Resources\mist_3.png" />
+    <None Remove="Assets\Resources\mist_4.png" />
+    <None Remove="Assets\Resources\ore_2_0.png" />
+    <None Remove="Assets\Resources\ore_3_0.png" />
+    <None Remove="Assets\Resources\ore_4_0.png" />
+    <None Remove="Assets\Resources\ore_4_1.png" />
+    <None Remove="Assets\Resources\ore_4_2.png" />
+    <None Remove="Assets\Resources\ore_4_3.png" />
+    <None Remove="Assets\Resources\ore_4_4.png" />
+    <None Remove="Assets\Resources\ore_5_0.png" />
+    <None Remove="Assets\Resources\ore_5_1.png" />
+    <None Remove="Assets\Resources\ore_5_2.png" />
+    <None Remove="Assets\Resources\ore_5_3.png" />
+    <None Remove="Assets\Resources\ore_5_4.png" />
+    <None Remove="Assets\Resources\ore_6_0.png" />
+    <None Remove="Assets\Resources\ore_6_1.png" />
+    <None Remove="Assets\Resources\ore_6_2.png" />
+    <None Remove="Assets\Resources\ore_6_3.png" />
+    <None Remove="Assets\Resources\ore_6_4.png" />
+    <None Remove="Assets\Resources\ore_7_0.png" />
+    <None Remove="Assets\Resources\ore_7_1.png" />
+    <None Remove="Assets\Resources\ore_7_2.png" />
+    <None Remove="Assets\Resources\ore_7_3.png" />
+    <None Remove="Assets\Resources\ore_7_4.png" />
+    <None Remove="Assets\Resources\ore_8_0.png" />
+    <None Remove="Assets\Resources\ore_8_1.png" />
+    <None Remove="Assets\Resources\ore_8_2.png" />
+    <None Remove="Assets\Resources\ore_8_3.png" />
+    <None Remove="Assets\Resources\ore_8_4.png" />
+    <None Remove="Assets\Resources\rare.png" />
+    <None Remove="Assets\Resources\rock_1_0.png" />
+    <None Remove="Assets\Resources\rock_2_0.png" />
+    <None Remove="Assets\Resources\rock_3_0.png" />
+    <None Remove="Assets\Resources\rock_4_0.png" />
+    <None Remove="Assets\Resources\rock_4_1.png" />
+    <None Remove="Assets\Resources\rock_4_2.png" />
+    <None Remove="Assets\Resources\rock_4_3.png" />
+    <None Remove="Assets\Resources\rock_5_0.png" />
+    <None Remove="Assets\Resources\rock_5_1.png" />
+    <None Remove="Assets\Resources\rock_5_2.png" />
+    <None Remove="Assets\Resources\rock_5_3.png" />
+    <None Remove="Assets\Resources\rock_6_0.png" />
+    <None Remove="Assets\Resources\rock_6_1.png" />
+    <None Remove="Assets\Resources\rock_6_2.png" />
+    <None Remove="Assets\Resources\rock_6_3.png" />
+    <None Remove="Assets\Resources\rock_7_0.png" />
+    <None Remove="Assets\Resources\rock_7_1.png" />
+    <None Remove="Assets\Resources\rock_7_2.png" />
+    <None Remove="Assets\Resources\rock_7_3.png" />
+    <None Remove="Assets\Resources\rock_8_0.png" />
+    <None Remove="Assets\Resources\rock_8_1.png" />
+    <None Remove="Assets\Resources\rock_8_2.png" />
+    <None Remove="Assets\Resources\rock_8_3.png" />
+    <None Remove="Assets\Resources\VEILWEAVER.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Enemies\Boss\KEEPERAXETHROWERBOSS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Enemies\Boss\KEEPERBERSERKBOSS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Enemies\Boss\KEEPERDRUIDBOSSSEER.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Enemies\Boss\KEEPEREARTHDAUGHTERBOSS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Enemies\Boss\KEEPERGIANTBOSSANCIENT.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Enemies\Enchanted\KEEPERAXETHROWER.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Enemies\Enchanted\KEEPERBERSERK.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Enemies\Enchanted\KEEPERDRUID.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Enemies\Enchanted\KEEPERGIANT.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Enemies\Medium\KEEPERAXETHROWER.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Enemies\Medium\KEEPERBEAR.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Enemies\Medium\KEEPERBERSERK.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Enemies\Medium\KEEPERDRUID.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Enemies\Medium\KEEPERMUSHROOMTHROWER.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Enemies\MiniBoss\KEEPERAXETHROWERMINIBOSS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Enemies\MiniBoss\KEEPERBERSERKMINIBOSS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Enemies\MiniBoss\KEEPERDRUIDMINIBOSS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Enemies\MiniBoss\KEEPERGIANTMINIBOSS.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Enemies\Normal\KEEPERUNPROVENFEMALE.png" />
+    <Content Include="Assets\Enemies\Normal\KEEPERUNPROVENMALE.png" />
+    <Content Include="Assets\Flags\BRIDGEWATCH.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Flags\CAERLEON.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Flags\FORTSTERLING.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Flags\FRIENDLY.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Flags\HOSTILE.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Flags\LYMHURST.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Flags\MARTLOCK.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Flags\THETFORD.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\AVALONMINIONCHEST.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\blue.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\cage.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\corrupt.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\CRYSTALSPIDER.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\dungeon_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\dungeon_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\dungeon_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\dungeon_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\dungeon_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\EVENTEASTERCHEST1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\EVENTEASTERCHEST2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\FAIRYDRAGON.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_2_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_3_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_4_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_4_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_4_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_4_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_4_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_5_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_5_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_5_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_5_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_5_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_6_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_6_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_6_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_6_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_6_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_7_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_7_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_7_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_7_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_7_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_8_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_8_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_8_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_8_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fiber_8_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\fish.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\green.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\GRIFFIN.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\group_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\group_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\group_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\group_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\group_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hellgate.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_1_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_2_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_3_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_4_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_4_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_4_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_4_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_4_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_5_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_5_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_5_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_5_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_5_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_6_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_6_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_6_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_6_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_6_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_7_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_7_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_7_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_7_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_7_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_8_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_8_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_8_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_8_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\hide_8_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\legendary.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_1_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_2_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_3_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_4_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_4_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_4_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_4_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_4_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_5_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_5_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_5_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_5_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_5_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_6_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_6_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_6_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_6_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_6_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_7_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_7_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_7_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_7_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_7_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_8_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_8_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_8_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_8_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\Logs_8_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\mist_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\mist_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\mist_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\mist_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\mist_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_2_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_3_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_4_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_4_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_4_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_4_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_4_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_5_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_5_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_5_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_5_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_5_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_6_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_6_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_6_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_6_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_6_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_7_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_7_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_7_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_7_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_7_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_8_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_8_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_8_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_8_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\ore_8_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rare.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_1_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_2_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_3_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_4_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_4_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_4_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_4_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_5_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_5_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_5_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_5_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_6_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_6_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_6_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_6_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_7_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_7_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_7_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_7_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_8_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_8_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_8_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\rock_8_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Resources\VEILWEAVER.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="PhotonPackageParser" Version="4.1.0" />
     <PackageReference Include="SharpPcap" Version="6.3.1" />
     <PackageReference Include="System.Reactive" Version="6.0.1" />
@@ -22,6 +788,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Assets\Enemies\Mist\" />
     <Folder Include="Views\" />
   </ItemGroup>
 

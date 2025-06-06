@@ -1,11 +1,31 @@
-﻿using AlbionRadar.Entities;
+﻿using AlbionDataHandlers.Entities;
+using AlbionRadar.Entities;
 
 namespace AlbionRadar.Mappers;
 
 public static class MobsMapper
 {
-    private static float Lerp(float a, float b, float t)
+    public static RadarEntity? ToRadarEntity(this Mob mob)
     {
-        return a + (b - a) * t;
+        if (mob == null) return null;
+        var entity = new RadarEntity
+        {
+            Id = mob.Id,
+            TypeId = mob.TypeId,
+            Name = mob.Name,
+            PositionX = mob.PositionX,
+            PositionY = mob.PositionY,
+            ImageUrl = GetImageUrl(mob)
+        };
+        return entity;
+    }
+
+    private static string? GetImageUrl(Mob mob)
+    {
+        if (mob.Type == AlbionDataHandlers.Enums.MobTypes.LivingSkinnable || mob.Type == AlbionDataHandlers.Enums.MobTypes.LivingHarvestable)
+        {
+            return $"Resources/{mob.Name}_{(int)mob.Tier}_{mob.EnchantmentLevel}.png";
+        }
+        return null;
     }
 }
