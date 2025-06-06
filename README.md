@@ -69,7 +69,7 @@ If you are a developer and wish to contribute or modify the project, you can bui
 ## Contributions
 Any kinds of contributions are accepted, but we would love to see:
 
-1. EntityId and EntityType mappings for more in-game entities. Or corrections to existing mappings. You can find the mappings [here](https://github.com/raidenblackout/AlbionRadar/blob/main/AlbionDataHandlers/Assets/mob_info.json) (*We know there are many wrong mappings*)
+1. TypeId and EntityType mappings for more in-game entities. Or corrections to existing mappings. You can find the mappings [here](https://github.com/raidenblackout/AlbionRadar/blob/main/AlbionDataHandlers/Assets/mob_info.json) (*We know there are many wrong mappings*)
 2. Refactoring and cleaning out the codebase.
 3. Improving the UI/UX of the overlay.
 4. Adding new features or improving existing ones.
