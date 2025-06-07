@@ -20,9 +20,6 @@ namespace AlbionRadar
         private const int WS_EX_LAYERED = 0x00080000;
         private const int WS_EX_TRANSPARENT = 0x00000020;
 
-        // Timer for polling the target window  
-        private DispatcherTimer _pollTimer;
-
         // Handle to the target window  
         private IntPtr _targetHwnd = IntPtr.Zero;
 
