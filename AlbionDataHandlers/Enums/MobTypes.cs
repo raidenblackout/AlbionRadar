@@ -12,4 +12,5 @@ public enum MobTypes
     Drone = 7,
     MistBoss = 8,
     Events = 9,
+    Treasure = 10
 }
