@@ -2,230 +2,187 @@
 using BaseUtils.Logger.Impl;
 using System.Diagnostics;
 
-namespace AlbionRadar.Managers;
-
-/// <summary>  
-/// Manages the game state, including player, mobs, and harvestables.  
-/// Handles updates, interpolation, and synchronization of game entities.  
-/// </summary>  
-public class GameStateManager
+namespace AlbionRadar.Managers
 {
-    private readonly object _stateLock = new();
-    private Player _currentPlayer;
-    private readonly Dictionary<int, Mob> _mobs = new();
-    private readonly Dictionary<int, Harvestable> _harvestables = new();
-
-    // --- Rendering & Timing ---  
-    private readonly Stopwatch _stopwatch = new();
-    private long _previousTimeTicks = 0;
-    private float _flashTime = -1.0f;
-
-    public float InterpolationFactor { get; private set; }
-    public float FlashTime => _flashTime;
-
     /// <summary>  
-    /// Gets the current player.  
+    /// Manages the game state by holding entity data and processing per-frame updates.  
+    /// Optimized to minimize memory allocations and ensure smooth interpolation.  
     /// </summary>  
-    public Player CurrentPlayer
+    public class GameStateManager
     {
-        get
+        private readonly object _stateLock = new();
+        private Player? _currentPlayer;
+        private readonly Dictionary<int, Mob> _mobs = new();
+        private readonly Dictionary<int, Harvestable> _harvestables = new();
+
+        private readonly Stopwatch _stopwatch = Stopwatch.StartNew();
+        private long _previousTimeTicks;
+        private float _flashTimeRemaining;
+
+        public float FlashTimeNormalized => _flashTimeRemaining > 0.0f ? _flashTimeRemaining : 0.0f;
+
+        public GameStateManager()
+        {
+            _previousTimeTicks = _stopwatch.ElapsedTicks;
+        }
+
+        #region State Update Methods  
+
+        /// <summary>  
+        /// Updates the player's state using network data.  
+        /// </summary>  
+        public void UpdatePlayerState(Player player)
         {
             lock (_stateLock)
             {
-                return _currentPlayer;
+                _currentPlayer ??= player;
+                _currentPlayer.SetTargetPosition(player.PositionX, player.PositionY);
             }
         }
-    }
 
-    /// <summary>  
-    /// Gets the list of current mobs.  
-    /// </summary>  
-    public List<Mob> CurrentMobs
-    {
-        get
+        /// <summary>  
+        /// Updates the state of all mobs using network data.  
+        /// </summary>  
+        public void UpdateMobsState(IEnumerable<Mob> incomingMobs)
         {
             lock (_stateLock)
             {
-                return _mobs.Values.ToList();
+                try
+                {
+                    var incomingIds = new HashSet<int>(incomingMobs.Select(m => m.Id));
+                    var idsToRemove = _mobs.Keys.Where(id => !incomingIds.Contains(id)).ToList();
+
+                    foreach (var id in idsToRemove)
+                    {
+                        _mobs.Remove(id);
+                    }
+
+                    foreach (var mob in incomingMobs)
+                    {
+                        if (_mobs.TryGetValue(mob.Id, out var existingMob))
+                        {
+                            existingMob.SetTargetPosition(mob.PositionX, mob.PositionY);
+                            existingMob.Experience = mob.Experience;
+                            existingMob.EnchantmentLevel = mob.EnchantmentLevel;
+                            existingMob.Rarity = mob.Rarity;
+                        }
+                        else
+                        {
+                            mob.SetTargetPosition(mob.PositionX, mob.PositionY);
+                            _mobs[mob.Id] = mob;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    DLog.E($"Error updating mobs state {ex}");
+                }
             }
         }
-    }
 
-    /// <summary>  
-    /// Gets the list of current harvestables.  
-    /// </summary>  
-    public List<Harvestable> CurrentHarvestables
-    {
-        get
+        /// <summary>  
+        /// Updates the state of all harvestables using network data.  
+        /// </summary>  
+        public void UpdateHarvestablesState(IEnumerable<Harvestable> incomingHarvestables)
         {
             lock (_stateLock)
             {
-                return _harvestables.Values.ToList();
-            }
-        }
-    }
-
-    /// <summary>  
-    /// Initializes a new instance of the <see cref="GameStateManager"/> class.  
-    /// Starts the stopwatch for timing calculations.  
-    /// </summary>  
-    public GameStateManager()
-    {
-        _stopwatch.Start();
-    }
-
-    /// <summary>  
-    /// Updates the player's state.  
-    /// </summary>  
-    /// <param name="player">The updated player object.</param>  
-    public void UpdatePlayerState(Player player)
-    {
-        lock (_stateLock)
-        {
-            if (_currentPlayer == null)
-            {
-                _currentPlayer = player;
-            }
-            else
-            {
-                _currentPlayer.PositionX = player.PositionX;
-                _currentPlayer.PositionY = player.PositionY;
-            }
-        }
-    }
-
-    /// <summary>  
-    /// Updates the state of mobs.  
-    /// </summary>  
-    /// <param name="mobs">The collection of updated mobs.</param>  
-    public void UpdateMobsState(IEnumerable<Mob> mobs)
-    {
-        lock (_stateLock)
-        {
-            try
-            {
-                foreach (var mob in mobs)
+                try
                 {
-                    if (_mobs.ContainsKey(mob.Id))
+                    var incomingIds = new HashSet<int>(incomingHarvestables.Select(h => h.Id));
+                    var idsToRemove = _harvestables.Keys.Where(id => !incomingIds.Contains(id)).ToList();
+
+                    foreach (var id in idsToRemove)
                     {
-                        // Update existing mob  
-                        var existingMob = _mobs[mob.Id];
-                        existingMob.PositionX = mob.PositionX;
-                        existingMob.PositionY = mob.PositionY;
-                        existingMob.Experience = mob.Experience;
-                        existingMob.EnchantmentLevel = mob.EnchantmentLevel;
-                        existingMob.Rarity = mob.Rarity;
+                        _harvestables.Remove(id);
                     }
-                    else
+
+                    foreach (var harvestable in incomingHarvestables)
                     {
-                        // Add new mob  
-                        _mobs[mob.Id] = mob;
+                        if (_harvestables.TryGetValue(harvestable.Id, out var existingHarvestable))
+                        {
+                            existingHarvestable.SetTargetPosition(harvestable.PositionX, harvestable.PositionY);
+                            existingHarvestable.EnchantmentLevel = harvestable.EnchantmentLevel;
+                            existingHarvestable.Size = harvestable.Size;
+                        }
+                        else
+                        {
+                            harvestable.SetTargetPosition(harvestable.PositionX, harvestable.PositionY);
+                            _harvestables[harvestable.Id] = harvestable;
+                        }
                     }
                 }
-
-                // Remove mobs that are no longer present  
-                var idsToRemove = _mobs.Keys.Except(mobs.Select(m => m.Id)).ToList();
-                foreach (var id in idsToRemove)
+                catch (Exception ex)
                 {
-                    _mobs.Remove(id);
+                    DLog.E($"Error updating harvestables state {ex}");
                 }
             }
-            catch (Exception ex)
-            {
-                DLog.I(ex.Message);
-            }
         }
-    }
 
-    /// <summary>  
-    /// Updates the state of harvestables.  
-    /// </summary>  
-    /// <param name="harvestables">The collection of updated harvestables.</param>  
-    public void UpdateHarvestablesState(IEnumerable<Harvestable> harvestables)
-    {
-        lock (_stateLock)
+        #endregion
+
+        #region State Accessor Methods  
+
+        public Player? GetPlayer()
         {
-            try
+            lock (_stateLock) { return _currentPlayer; }
+        }
+
+        public void GetMobs(List<Mob> targetList)
+        {
+            targetList.Clear();
+            lock (_stateLock) { targetList.AddRange(_mobs.Values); }
+        }
+
+        public void GetHarvestables(List<Harvestable> targetList)
+        {
+            targetList.Clear();
+            lock (_stateLock) { targetList.AddRange(_harvestables.Values); }
+        }
+
+        #endregion
+
+        public void TriggerFlash(float durationSeconds)
+        {
+            _flashTimeRemaining = Math.Max(_flashTimeRemaining, durationSeconds);
+        }
+
+        /// <summary>  
+        /// Per-frame update tick. Calculates delta time and updates interpolation for all entities.  
+        /// </summary>  
+        public void Update()
+        {
+            long currentTimeTicks = _stopwatch.ElapsedTicks;
+            long deltaTimeTicks = currentTimeTicks - _previousTimeTicks;
+            _previousTimeTicks = currentTimeTicks;
+            float deltaTimeSeconds = (float)deltaTimeTicks / Stopwatch.Frequency;
+
+            if (deltaTimeSeconds > 0.1f)
             {
-                foreach (var harvestable in harvestables)
+                deltaTimeSeconds = 0.1f;
+            }
+
+            lock (_stateLock)
+            {
+                _currentPlayer?.Interpolate(deltaTimeSeconds);
+
+                foreach (var mob in _mobs.Values)
                 {
-                    if (_harvestables.ContainsKey(harvestable.Id))
-                    {
-                        // Update existing harvestable  
-                        var existingHarvestable = _harvestables[harvestable.Id];
-                        existingHarvestable.PositionX = harvestable.PositionX;
-                        existingHarvestable.PositionY = harvestable.PositionY;
-                        existingHarvestable.EnchantmentLevel = harvestable.EnchantmentLevel;
-                        existingHarvestable.Size = harvestable.Size;
-                    }
-                    else
-                    {
-                        // Add new harvestable  
-                        _harvestables[harvestable.Id] = harvestable;
-                    }
+                    mob.Interpolate(deltaTimeSeconds);
                 }
 
-                // Remove harvestables that are no longer present  
-                var idsToRemove = _harvestables.Keys.Except(harvestables.Select(h => h.Id)).ToList();
-                foreach (var id in idsToRemove)
+                foreach (var harvestable in _harvestables.Values)
                 {
-                    _harvestables.Remove(id);
+                    harvestable.Interpolate(deltaTimeSeconds);
                 }
             }
-            catch (Exception ex)
-            {
-                DLog.I(ex.Message);
-            }
-        }
-    }
 
-    /// <summary>  
-    /// Updates the game state, including interpolation and timing.  
-    /// </summary>  
-    public void Update()
-    {
-        long currentTimeTicks = _stopwatch.ElapsedTicks;
-        long deltaTimeTicks = currentTimeTicks - _previousTimeTicks;
-        double deltaTimeMs = (double)deltaTimeTicks / Stopwatch.Frequency * 1000.0;
-        InterpolationFactor = Math.Min(1.0f, (float)deltaTimeMs / 100.0f);
-
-        lock (_stateLock)
-        {
-            _currentPlayer?.Interpolate(InterpolationFactor);
-            foreach (var mob in _mobs.Values)
+            if (_flashTimeRemaining > 0)
             {
-                mob.Interpolate(InterpolationFactor);
+                _flashTimeRemaining -= deltaTimeSeconds;
             }
 
-            foreach (var harvestable in _harvestables.Values)
-            {
-                harvestable.Interpolate(InterpolationFactor);
-            }
+            DLog.D($"GameStateManager Updated. Delta: {deltaTimeSeconds * 1000:F2}ms");
         }
-
-        _previousTimeTicks = currentTimeTicks;
-
-        // Handle flash time  
-        if (_flashTime >= 0.0f)
-        {
-            _flashTime -= InterpolationFactor;
-            if (_flashTime < 0.0f)
-            {
-                _flashTime = -1.0f;
-            }
-        }
-
-        DLog.I($"GameStateManager: Update called. InterpolationFactor: {InterpolationFactor}, FlashTime: {_flashTime}");
-
-        if (_flashTime < 0.0f)
-        {
-            _flashTime = 0.0f; // Reset flash time if it was negative  
-        }
-        else if (_flashTime > 0.0f)
-        {
-            _flashTime = Math.Max(0.0f, _flashTime - InterpolationFactor); // Ensure flash time does not go negative  
-        }
-
-        DLog.I($"GameStateManager: Update completed. Current Player Position: ({_currentPlayer?.PositionX}, {_currentPlayer?.PositionY}), Mobs Count: {_mobs.Count}");
     }
 }

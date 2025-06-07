@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -10,6 +11,28 @@ namespace BaseUtils.Logger.Impl
 {
     public class ConsoleLogger : ILogLogger
     {
+        private static readonly FileLogger fileLogger = new FileLogger();
+        public void D(string message, [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = 0, [CallerFilePath] string callerFilePath = "")
+        {
+            I(message, callerMemberName, callerLineNumber, callerFilePath); // Log to console and file
+        }
+
+        public void E(string message, [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = 0, [CallerFilePath] string callerFilePath = "")
+        {
+            I(message, callerMemberName, callerLineNumber, callerFilePath); // Log to console and file
+        }
+
+        public void I(string message, [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = 0, [CallerFilePath] string callerFilePath = "")
+        {
+            Trace.WriteLine($"[{DateTime.Now:HH:mm:ss}] INFO: {message} (Caller: {callerMemberName}, Line: {callerLineNumber}, File: {callerFilePath})");
+            fileLogger.I(message, callerMemberName, callerLineNumber, callerFilePath); // Log to file as well
+        }
+    }
+
+    public class FileLogger : ILogLogger
+    {
+        private readonly string logFilePath = "application.log";
+        private static readonly object fileLock = new object();
         public void D(string message, [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = 0, [CallerFilePath] string callerFilePath = "")
         {
             throw new NotImplementedException();
@@ -22,7 +45,21 @@ namespace BaseUtils.Logger.Impl
 
         public void I(string message, [CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = 0, [CallerFilePath] string callerFilePath = "")
         {
-            Trace.WriteLine($"[{DateTime.Now:HH:mm:ss}] INFO: {message} (Caller: {callerMemberName}, Line: {callerLineNumber}, File: {callerFilePath})");
+            lock (fileLock) // Ensure thread safety when writing to the file
+            {
+                try
+                {
+                    using (var writer = new StreamWriter(logFilePath, true))
+                    {
+                        writer.WriteLine($"[{DateTime.Now:HH:mm:ss}] INFO: {message} (Caller: {callerMemberName}, Line: {callerLineNumber}, File: {callerFilePath})");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Handle exceptions related to file writing, e.g., log to console or another file
+                    Console.WriteLine($"Failed to write log: {ex.Message}");
+                }
+            }
         }
     }
 

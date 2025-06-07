@@ -3,118 +3,74 @@ using AlbionRadar.ViewModels;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
-namespace AlbionRadar.Entities;
-
-/// <summary>  
-/// Represents an entity in the radar system with properties such as position, type, and other metadata.  
-/// Implements INotifyPropertyChanged for data binding and IEqualityComparer for comparison.  
-/// </summary>  
-public class RadarEntity : MVVMBase, IEqualityComparer<RadarEntity>
+namespace AlbionRadar.Entities
 {
     /// <summary>  
-    /// Compares two RadarEntity objects for equality based on their hash codes.  
+    /// Represents an entity on the radar. Implements INotifyPropertyChanged for data binding
+    /// and IEquatable for correct comparison based on its unique ID.
     /// </summary>  
-    public bool Equals(RadarEntity? x, RadarEntity? y)
+    public class RadarEntity : MVVMBase, IEquatable<RadarEntity>
     {
-        return x?.GetHashCode() == y?.GetHashCode();
-    }
+        // Backing fields
+        private int _id;
+        private string _name;
+        private float _positionX;
+        private float _positionY;
+        private int _typeId;
+        private string? _imageUrl;
+        private int _enchantmentLevel;
+        private EntityTypes _type;
 
-    /// <summary>  
-    /// Generates a hash code for the RadarEntity object based on its properties.  
-    /// </summary>  
-    public int GetHashCode([DisallowNull] RadarEntity obj)
-    {
-        unchecked
+        public int Id { get => _id; set => SetField(ref _id, value); }
+        public string Name { get => _name; set => SetField(ref _name, value); }
+        public float PositionX { get => _positionX; set => SetField(ref _positionX, value); }
+        public float PositionY { get => _positionY; set => SetField(ref _positionY, value); }
+        public int TypeId { get => _typeId; set => SetField(ref _typeId, value); }
+        public string? ImageUrl { get => _imageUrl; set => SetField(ref _imageUrl, value); }
+        public int EnchantmentLevel { get => _enchantmentLevel; set => SetField(ref _enchantmentLevel, value); }
+        public EntityTypes Type { get => _type; set => SetField(ref _type, value); }
+
+        #region Equality Members
+
+        /// <summary>
+        /// Implements IEquatable for type-safe comparison.
+        /// Two RadarEntity objects are considered equal if they have the same ID.
+        /// </summary>
+        public bool Equals(RadarEntity? other)
         {
-            int hash = 17;
-            hash = hash * 23 + Id.GetHashCode();
-            hash = hash * 23 + TypeId.GetHashCode();
-            hash = hash * 23 + PositionX.GetHashCode();
-            hash = hash * 23 + PositionY.GetHashCode();
-            hash = hash * 23 + (Name?.GetHashCode() ?? 0);
-            return hash;
+            if (other is null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            // Two entities are the same if their unique ID is the same.
+            return this.Id == other.Id;
         }
-    }
 
-    // Backing fields for properties.  
-    private string _name;
-    private float _positionX;
-    private float _positionY;
-    private int _id;
-    private int _typeId;
-    private string? _imageUrl = string.Empty;
-    private int _enchantmentLevel = 0;
-    private EntityTypes _type = EntityTypes.Player;
+        /// <summary>
+        /// Overrides the base Equals method.
+        /// </summary>
+        public override bool Equals(object? obj)
+        {
+            return Equals(obj as RadarEntity);
+        }
 
-    /// <summary>  
-    /// Gets or sets the name of the entity.  
-    /// </summary>  
-    public string Name
-    {
-        get => _name;
-        set => SetField(ref _name, value);
-    }
+        /// <summary>
+        /// Overrides the base GetHashCode method. It's crucial to override this when overriding Equals.
+        /// The hash code should be based on the same property used for equality checks.
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return Id;
+        }
 
-    /// <summary>  
-    /// Gets or sets the X-coordinate of the entity's position.  
-    /// </summary>  
-    public float PositionX
-    {
-        get => _positionX;
-        set => SetField(ref _positionX, value);
-    }
+        public static bool operator ==(RadarEntity? left, RadarEntity? right)
+        {
+            return Equals(left, right);
+        }
 
-    /// <summary>  
-    /// Gets or sets the Y-coordinate of the entity's position.  
-    /// </summary>  
-    public float PositionY
-    {
-        get => _positionY;
-        set => SetField(ref _positionY, value);
-    }
+        public static bool operator !=(RadarEntity? left, RadarEntity? right)
+        {
+            return !Equals(left, right);
+        }
 
-    /// <summary>  
-    /// Gets or sets the unique identifier of the entity.  
-    /// </summary>  
-    public int Id
-    {
-        get => _id;
-        set => SetField(ref _id, value);
-    }
-
-    /// <summary>  
-    /// Gets or sets the type identifier of the entity.  
-    /// </summary>  
-    public int TypeId
-    {
-        get => _typeId;
-        set => SetField(ref _typeId, value);
-    }
-
-    /// <summary>  
-    /// Gets or sets the image URL associated with the entity.  
-    /// </summary>  
-    public string? ImageUrl
-    {
-        get => _imageUrl;
-        set => SetField(ref _imageUrl, value);
-    }
-
-    /// <summary>  
-    /// Gets or sets the enchantment level of the entity.  
-    /// </summary>  
-    public int EnchantmentLevel
-    {
-        get => _enchantmentLevel;
-        set => SetField(ref _enchantmentLevel, value);
-    }
-
-    /// <summary>  
-    /// Gets or sets the type of the entity.  
-    /// </summary>  
-    public EntityTypes Type
-    {
-        get => _type;
-        set => SetField(ref _type, value);
+        #endregion
     }
 }

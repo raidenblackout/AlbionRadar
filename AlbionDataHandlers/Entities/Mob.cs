@@ -1,64 +1,75 @@
 ﻿using AlbionDataHandlers.Enums;
 using AlbionDataHandlers.Mappers;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis; // Required for [DisallowNull]
 
-namespace AlbionDataHandlers.Entities;
-
-public class Mob : InterpolatableEntity, IEqualityComparer<Mob>
+namespace AlbionDataHandlers.Entities
 {
-    public int Id = 0;
-    public int TypeId = 0;
-    public float Experience = 0;
-    private string _name = string.Empty;
-    public string Name
+    /// <summary>  
+    /// Represents a Mob entity. Inherits interpolation logic from InterpolatableEntity  
+    /// and implements equality checks based on its unique ID.  
+    /// </summary>  
+    public class Mob : InterpolatableEntity, IEqualityComparer<Mob>
     {
-        get => string.IsNullOrEmpty(_name) ? MobMapper.Instance.GetMobInfo(TypeId)?.Name ?? _name : _name;
-        set
+        public int Id { get; set; }
+        public int TypeId { get; set; }
+        public float Experience { get; set; }
+        public int EnchantmentLevel { get; set; }
+        public int Rarity { get; set; }
+
+        private string _name = string.Empty;
+        public string Name
         {
-            if (!string.IsNullOrEmpty(value))
+            get
             {
-                _name = value;
+                // Retrieve the name from the mapper if not set directly.  
+                return string.IsNullOrEmpty(_name)
+                    ? MobMapper.Instance.GetMobInfo(TypeId)?.Name ?? string.Empty
+                    : _name;
+            }
+            set
+            {
+                _name = value ?? string.Empty;
             }
         }
-    }
 
-    public int EnchantmentLevel = 0;
-    public int Rarity = 0;
-    public float PositionX
-    {
-        set
+        /// <summary>  
+        /// Carries position data from the network parser to the GameStateManager.  
+        /// Not used for rendering.  
+        /// </summary>  
+        public float PositionX { get; set; }
+
+        /// <summary>  
+        /// Carries position data from the network parser to the GameStateManager.  
+        /// Not used for rendering.  
+        /// </summary>  
+        public float PositionY { get; set; }
+
+        #region Mapped Properties  
+        public MobTypes Type => MobMapper.Instance.GetMobInfo(TypeId)?.Type ?? MobTypes.Enemy;
+        public TierLevels Tier => MobMapper.Instance.GetMobInfo(TypeId)?.Tier ?? TierLevels.Tier1;
+        #endregion
+
+        #region IEqualityComparer<Mob> Implementation  
+
+        /// <summary>  
+        /// Determines equality based on the unique ID.  
+        /// </summary>  
+        public bool Equals(Mob? x, Mob? y)
         {
-            FromX = ToX;
-            ToX = value;
+            if (ReferenceEquals(x, y)) return true;
+            if (x is null || y is null) return false;
+            return x.Id == y.Id;
         }
-        get => ToX;
-    }
 
-    public float PositionY
-    {
-        set
+        /// <summary>  
+        /// Generates a hash code based on the unique ID.  
+        /// </summary>  
+        public int GetHashCode(Mob obj)
         {
-            FromY = ToY;
-            ToY = value;
+            return obj.Id;
         }
-        get => ToY;
-    }
 
-    public MobTypes Type => MobMapper.Instance.GetMobInfo(TypeId)?.Type ?? MobTypes.Enemy;
-    public TierLevels Tier => MobMapper.Instance.GetMobInfo(TypeId)?.Tier ?? TierLevels.Tier1;
-
-    public bool Equals(Mob x, Mob y)
-    {
-        return x.GetHashCode() == y.GetHashCode();
-    }
-
-    public int GetHashCode(Mob obj)
-    {
-        unchecked
-        {
-            return (obj.Id * 397) ^ obj.TypeId.GetHashCode() ^ obj.Experience.GetHashCode() ^
-                   (obj.Name?.GetHashCode() ?? 0) ^ obj.EnchantmentLevel.GetHashCode() ^
-                   obj.Rarity.GetHashCode() ^ obj.CurrentLerpedX.GetHashCode() ^ obj.CurrentLerpedY.GetHashCode();
-        }
+        #endregion
     }
 }

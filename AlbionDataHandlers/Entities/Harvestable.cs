@@ -1,47 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis; // Required for [DisallowNull]
 
-namespace AlbionDataHandlers.Entities;
-
-public class Harvestable : InterpolatableEntity, IEqualityComparer<Harvestable>
+namespace AlbionDataHandlers.Entities
 {
-    public int Id = 0;
-    public int Type = 0;
-    public int Tier = 0;
-    public int EnchantmentLevel = 0;
-    public int Size = 0;
-    public float PositionX
+    /// <summary>  
+    /// Represents a harvestable resource node (e.g., ore, fiber, stone).  
+    /// </summary>  
+    public class Harvestable : InterpolatableEntity, IEqualityComparer<Harvestable>
     {
-        set
-        {
-            FromX = ToX;
-            ToX = value;
-        }
-        get => ToX;
-    }
+        public int Id { get; set; }
+        public int Type { get; set; }
+        public int Tier { get; set; }
+        public int EnchantmentLevel { get; set; }
+        public int Size { get; set; }
 
-    public float PositionY
-    {
-        set
-        {
-            FromY = ToY;
-            ToY = value;
-        }
-        get => ToY;
-    }
+        /// <summary>  
+        /// Carries position data from the network parser to the GameStateManager.  
+        /// Not used for rendering.  
+        /// </summary>  
+        public float PositionX { get; set; }
 
-    public bool Equals(Harvestable x, Harvestable y)
-    {
-        return x.GetHashCode() == y.GetHashCode();
-    }
+        /// <summary>  
+        /// Carries position data from the network parser to the GameStateManager.  
+        /// Not used for rendering.  
+        /// </summary>  
+        public float PositionY { get; set; }
 
-    public int GetHashCode(Harvestable obj)
-    {
-        unchecked
+        #region IEqualityComparer<Harvestable> Implementation  
+
+        /// <summary>  
+        /// Compares two Harvestable objects for equality based on their IDs.  
+        /// </summary>  
+        public bool Equals(Harvestable? x, Harvestable? y)
         {
-            return (obj.Id * 397) ^ obj.Type.GetHashCode() ^ obj.Tier.GetHashCode() ^
-                   obj.EnchantmentLevel.GetHashCode() ^ obj.Size.GetHashCode() ^
-                   obj.PositionX.GetHashCode() ^ obj.PositionY.GetHashCode();
+            if (ReferenceEquals(x, y)) return true;
+            if (x is null || y is null) return false;
+            return x.Id == y.Id;
         }
+
+        /// <summary>  
+        /// Generates a hash code for the Harvestable based on its ID.  
+        /// </summary>  
+        public int GetHashCode(Harvestable obj)
+        {
+            return obj.Id;
+        }
+
+        #endregion
     }
 }
