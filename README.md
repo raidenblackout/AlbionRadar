@@ -67,7 +67,7 @@ If you are a developer and wish to contribute or modify the project, you can bui
 
 
 ## Contributions
-Any kinds of contributions are accepted, but we would love to see:
+Any kind of contributions are accepted, but we would love to see:
 
 1. TypeId and EntityType mappings for more in-game entities. Or corrections to existing mappings. You can find the mappings [here](https://github.com/raidenblackout/AlbionRadar/blob/main/AlbionDataHandlers/Assets/mob_info.json) (*We know there are many wrong mappings*)
 2. Refactoring and cleaning out the codebase.
@@ -78,3 +78,6 @@ Any kinds of contributions are accepted, but we would love to see:
 ## Disclaimer
 
 This tool is provided for educational and experimental purposes only. The developers are not responsible for any actions taken by users of this software. Use at your own risk. Please be aware of and adhere to the Terms of Service of Albion Online when using any third-party tools.
+
+## References
+This tool is a .NET port of the following [ZQRadar](https://github.com/Zeldruck/Albion-Online-ZQRadar) with additional features in mind.
