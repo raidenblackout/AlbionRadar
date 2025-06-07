@@ -29,6 +29,25 @@ public class MobsHandler : IEventHandler
             case EventCodes.NewMob:
                 HandleNewMob(parameters);
                 break;
+            case EventCodes.MobChangeState:
+                HandleMobChangeState(parameters);
+                break;
+        }
+    }
+
+    private void HandleMobChangeState(Dictionary<byte, object> parameters)
+    {
+        var id = EventHandlerUtils.ExtractValue<int>(parameters, 0);
+        var enchantmentLevel = EventHandlerUtils.ExtractValue<int>(parameters, 1);
+
+        lock (_lockObject)
+        {
+            var existingMob = _mobs.FirstOrDefault(m => m.Id == id);
+            if (existingMob != null)
+            {
+                existingMob.EnchantmentLevel = enchantmentLevel;
+                Mobs.OnNext(_mobs);
+            }
         }
     }
 
