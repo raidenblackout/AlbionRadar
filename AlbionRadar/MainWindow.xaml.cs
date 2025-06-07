@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Threading;
 using Application = System.Windows.Application;
 
@@ -70,12 +71,7 @@ namespace AlbionRadar
         /// </summary>  
         private void StartTracking()
         {
-            _pollTimer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromMilliseconds(500)
-            };
-            _pollTimer.Tick += PollTargetWindow;
-            _pollTimer.Start();
+            CompositionTarget.Rendering += PollTargetWindow;
         }
 
         /// <summary>  
