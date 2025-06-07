@@ -54,8 +54,9 @@ namespace AlbionRadar.UserControls
            {
                { 0, Colors.LightSkyBlue },
                { 1, Colors.Green },
-               { 2, Colors.Purple },
-               { 3, Colors.Orange },
+               { 2, Colors.Blue },
+               { 3, Colors.Purple },
+               { 4, Colors.Orange },
            };
 
         public RadarIcon()
