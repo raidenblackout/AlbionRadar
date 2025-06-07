@@ -8,13 +8,17 @@ using System.Windows.Media.Imaging;
 namespace AlbionRadar.UserControls
 {
     /// <summary>  
-    /// Represents a single icon on the radar, which updates its appearance
-    /// based on the data in its associated RadarEntity.
+    /// Represents a single icon on the radar, updating its appearance  
+    /// based on the associated RadarEntity data.  
     /// </summary>  
     public partial class RadarIcon : UserControl
     {
         private RadarEntity? _radarEntity;
 
+        /// <summary>  
+        /// Gets or sets the RadarEntity associated with this icon.  
+        /// Updates visuals when the entity changes.  
+        /// </summary>  
         public RadarEntity? RadarEntity
         {
             get => _radarEntity;
@@ -35,32 +39,43 @@ namespace AlbionRadar.UserControls
             }
         }
 
-        // Mapping of enchantment levels to drop shadow colors  
+        // Maps enchantment levels to corresponding drop shadow colors.  
         private static readonly Dictionary<int, Color> s_dropShadowColorMap = new()
-        {
-            { 0, Colors.Transparent },
-            { 1, Colors.Green },
-            { 2, Colors.Blue },
-            { 3, Colors.Purple },
-            { 4, Colors.Yellow }
-        };
+           {
+               { 0, Colors.Transparent },
+               { 1, Colors.Green },
+               { 2, Colors.Blue },
+               { 3, Colors.Purple },
+               { 4, Colors.Yellow }
+           };
+
+        // Maps mist enchantment levels to corresponding colors.
+        private static readonly Dictionary<int, Color> s_mistColorMap = new()
+           {
+               { 0, Colors.LightSkyBlue },
+               { 1, Colors.Green },
+               { 2, Colors.Purple },
+               { 3, Colors.Orange },
+           };
 
         public RadarIcon()
         {
             InitializeComponent();
-            this.DataContext = this; // Simplifies bindings in XAML if needed
-            UpdateVisuals(); // Set initial state
+            this.DataContext = this;
+            UpdateVisuals();
         }
 
+        /// <summary>  
+        /// Handles property changes in the associated RadarEntity.  
+        /// Updates visuals on the UI thread.  
+        /// </summary>  
         private void OnRadarEntityPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            // When a property of the entity changes (e.g., EnchantmentLevel), update the visuals.
-            // Dispatching to the UI thread is good practice if the event could come from a background thread.
             Dispatcher.Invoke(UpdateVisuals);
         }
 
         /// <summary>  
-        /// Updates all UI elements based on the current state of the RadarEntity.  
+        /// Updates the UI elements based on the current RadarEntity state.  
         /// </summary>  
         private void UpdateVisuals()
         {
@@ -75,22 +90,26 @@ namespace AlbionRadar.UserControls
             MainImage.Visibility = Visibility.Collapsed;
             MainEllipse.Visibility = Visibility.Collapsed;
 
+
+            if (_radarEntity.Name != null && _radarEntity.Name.Contains("MIST"))
+            {
+                Color mistColor = s_mistColorMap.TryGetValue(_radarEntity.EnchantmentLevel, out var mist_color )
+                    ? mist_color
+                    : Colors.SkyBlue;
+                MistEllipse.Visibility = Visibility.Visible;
+                MistEllipse.Fill = new SolidColorBrush(mistColor);
+                MistDropShadow.Color = mistColor;
+                Title.Text = "MIST";
+                return;
+            }
+
             Color shadowColor = s_dropShadowColorMap.TryGetValue(_radarEntity.EnchantmentLevel, out var color)
                 ? color
                 : Colors.Transparent;
 
-            if (_radarEntity.Name != null && _radarEntity.Name.Contains("MIST"))
-            {
-                MistEllipse.Visibility = Visibility.Visible;
-                MistEllipse.Fill = new SolidColorBrush(shadowColor);
-                MistDropShadow.Color = shadowColor;
-                Title.Text = "MIST";
-            }
-            else if (string.IsNullOrEmpty(_radarEntity.ImageUrl))
+            if (string.IsNullOrEmpty(_radarEntity.ImageUrl))
             {
                 MainEllipse.Visibility = Visibility.Visible;
-                // You might want a default color for the ellipse
-                // MainEllipse.Fill = ... 
                 Title.Text = $"{_radarEntity.TypeId}";
             }
             else

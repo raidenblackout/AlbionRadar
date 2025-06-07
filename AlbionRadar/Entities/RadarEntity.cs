@@ -6,12 +6,12 @@ using System.Diagnostics.CodeAnalysis;
 namespace AlbionRadar.Entities
 {
     /// <summary>  
-    /// Represents an entity on the radar. Implements INotifyPropertyChanged for data binding
-    /// and IEquatable for correct comparison based on its unique ID.
+    /// Represents an entity on the radar. Implements INotifyPropertyChanged for data binding  
+    /// and IEquatable for comparison based on its unique ID.  
     /// </summary>  
     public class RadarEntity : MVVMBase, IEquatable<RadarEntity>
     {
-        // Backing fields
+        // Backing fields  
         private int _id;
         private string _name;
         private float _positionX;
@@ -30,32 +30,29 @@ namespace AlbionRadar.Entities
         public int EnchantmentLevel { get => _enchantmentLevel; set => SetField(ref _enchantmentLevel, value); }
         public EntityTypes Type { get => _type; set => SetField(ref _type, value); }
 
-        #region Equality Members
+        #region Equality Members  
 
-        /// <summary>
-        /// Implements IEquatable for type-safe comparison.
-        /// Two RadarEntity objects are considered equal if they have the same ID.
-        /// </summary>
+        /// <summary>  
+        /// Compares two RadarEntity objects for equality based on their unique ID.  
+        /// </summary>  
         public bool Equals(RadarEntity? other)
         {
             if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
-            // Two entities are the same if their unique ID is the same.
             return this.Id == other.Id;
         }
 
-        /// <summary>
-        /// Overrides the base Equals method.
-        /// </summary>
+        /// <summary>  
+        /// Overrides the base Equals method to use the type-safe Equals implementation.  
+        /// </summary>  
         public override bool Equals(object? obj)
         {
             return Equals(obj as RadarEntity);
         }
 
-        /// <summary>
-        /// Overrides the base GetHashCode method. It's crucial to override this when overriding Equals.
-        /// The hash code should be based on the same property used for equality checks.
-        /// </summary>
+        /// <summary>  
+        /// Overrides GetHashCode to ensure consistency with the Equals method.  
+        /// </summary>  
         public override int GetHashCode()
         {
             return Id;
