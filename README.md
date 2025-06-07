@@ -79,5 +79,5 @@ Any kind of contributions are accepted, but we would love to see:
 
 This tool is provided for educational and experimental purposes only. The developers are not responsible for any actions taken by users of this software. Use at your own risk. Please be aware of and adhere to the Terms of Service of Albion Online when using any third-party tools.
 
-## References
+## Credits
 This tool is a .NET port of the following [ZQRadar](https://github.com/Zeldruck/Albion-Online-ZQRadar) with additional features in mind.
