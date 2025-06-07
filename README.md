@@ -29,7 +29,7 @@ For users who prefer not to build the project from source, you can download the 
     * Run the installer and follow the on-screen instructions. It is generally recommended to install with the "Install Npcap in WinPcap API-compatible Mode" option checked.
 
 2.  **Download AlbionRadar**:
-    * Go to the [AlbionRadar v0.0.1 Release Page](https://github.com/raidenblackout/AlbionRadar/releases/tag/v0.0.4)
+    * Go to the [AlbionRadar v0.0.4 Release Page](https://github.com/raidenblackout/AlbionRadar/releases/tag/v0.0.4)
     * Download the executable or compiled package for your system.
 
 3.  **Run the Application**:
