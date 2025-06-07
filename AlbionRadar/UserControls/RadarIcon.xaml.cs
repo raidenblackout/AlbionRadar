@@ -61,6 +61,9 @@ namespace AlbionRadar.UserControls
                 MainImage.Visibility = Visibility.Collapsed;
                 MainEllipse.Visibility = Visibility.Collapsed;
                 MistEllipse.Visibility  = Visibility.Visible;
+                MistEllipse.Fill = new SolidColorBrush(_dropShadowColorMap.ContainsKey(RadarEntity.EnchantmentLevel)
+                    ? _dropShadowColorMap[RadarEntity.EnchantmentLevel]
+                    : Colors.Transparent);
                 MistDropShadow.Color = _dropShadowColorMap.ContainsKey(RadarEntity.EnchantmentLevel)
                     ? _dropShadowColorMap[RadarEntity.EnchantmentLevel]
                     : Colors.Transparent;

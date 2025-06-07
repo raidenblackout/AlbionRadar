@@ -122,6 +122,7 @@ public class MobsHandler : IEventHandler
         lock (_lockObject)
         {
             _mobs.Clear();
+            Mobs.OnNext(_mobs);
         }
     }
 }

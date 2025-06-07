@@ -116,6 +116,7 @@ public class HarvestableHandler : IEventHandler
         lock (_lockObject)
         {
             _harvestables.Clear();
+            Harvestables.OnNext(_harvestables);
         }
     }
 }
