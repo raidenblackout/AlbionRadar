@@ -116,9 +116,17 @@ namespace AlbionRadar.UserControls
             else
             {
                 MainImage.Visibility = Visibility.Visible;
-                MainImage.Source = new BitmapImage(new Uri(
-                    $"pack://application:,,,/AlbionRadar;component/Assets/{_radarEntity.ImageUrl}",
-                    UriKind.Absolute));
+                try
+                {
+                    MainImage.Source = new BitmapImage(new Uri(
+                        $"pack://application:,,,/AlbionRadar;component/Assets/{_radarEntity.ImageUrl}",
+                        UriKind.Absolute));
+                }catch(Exception ex)
+                {
+                    MainImage.Source = new BitmapImage(new Uri(
+                        $"pack://application:,,,/AlbionRadar;component/Assets/Resources/GRIFFIN.png",
+                        UriKind.Absolute));
+                }
                 ImageDropShadow.Color = shadowColor;
                 Title.Text = $"{_radarEntity.TypeId}";
             }
