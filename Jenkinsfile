@@ -1,4 +1,4 @@
-// Jenkinsfile with post-build workspace cleanup
+// Jenkinsfile for building directly on the Windows agent (no Docker)
 
 pipeline {
     agent { label 'windows' }
@@ -22,11 +22,24 @@ pipeline {
                 checkout scm
             }
         }
-        
-        stage('Restore Packages with nuget.exe') {
+
+        // --- TROUBLESHOOTING STEP ---
+        // If builds continue to fail, uncomment the following stage to force
+        // a completely fresh download of all packages.
+        /*
+        stage('Clear NuGet Cache') {
             steps {
-                echo "Restoring NuGet packages for the entire solution..."
-                bat 'nuget restore AlbionRadar.sln'
+                echo "Clearing all local NuGet caches on the agent..."
+                bat 'dotnet nuget locals all --clear'
+            }
+        }
+        */
+        
+        stage('Restore NuGet Packages') {
+            steps {
+                echo "Restoring NuGet packages for AlbionRadar.sln..."
+                
+                bat 'dotnet restore AlbionRadar.sln -v n'
             }
         }
 
@@ -52,18 +65,14 @@ pipeline {
         }
     }
     
-    // This section runs after all the stages are complete.
     post {
         always {
-            echo 'Build process finished. Now cleaning up the workspace...'
-            
+            echo 'Build process finished.'
             cleanWs()
         }
-        
         success {
             echo 'Build was successful!'
         }
-        
         failure {
             echo 'BUILD FAILED. Check the logs for details.'
         }
