@@ -9,6 +9,7 @@ AlbionRadar is an experimental tool designed to provide a real-time information 
 * **Real-time Entity Tracking**: Visualize the positions and types of various in-game entities, including creatures and resources.
 * **Detailed Information Display**: Get insights into the tier and type of detected entities.
 * **Intuitive Overlay**: Information is presented in a separate, non-intrusive window.
+* **Less chance of getting banned**: Unlike other tools, AlbionRadar does not inject code into the game client, reducing the risk of detection and bans.
 
 ## Requirements
 
