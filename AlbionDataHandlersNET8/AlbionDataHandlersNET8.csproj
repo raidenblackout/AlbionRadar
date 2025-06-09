@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\mob_info.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Handlers\ChestsHandler\" />
+    <Folder Include="Handlers\DungeonsHandler\" />
+    <Folder Include="Handlers\FishingHandler\" />
+    <Folder Include="Handlers\WispCageHandler\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Reactive" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BaseUtilsNET8\BaseUtilsNET8.csproj" />
+    <ProjectReference Include="..\PhotonParserNET8\PhotonParserNET8.csproj" />
+  </ItemGroup>
+
+</Project>

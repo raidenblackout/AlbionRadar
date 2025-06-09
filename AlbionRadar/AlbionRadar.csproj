@@ -786,15 +786,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AlbionDataHandlers\AlbionDataHandlers.csproj" />
-    <ProjectReference Include="..\BaseUtils\BaseUtils.csproj" />
-    <ProjectReference Include="..\PhotonParser\PhotonParser.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Assets\Enemies\Mist\" />
     <Folder Include="Utils\" />
     <Folder Include="Views\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AlbionDataHandlersNET8\AlbionDataHandlersNET8.csproj" />
+    <ProjectReference Include="..\BaseUtilsNET8\BaseUtilsNET8.csproj" />
+    <ProjectReference Include="..\PhotonParserNET8\PhotonParserNET8.csproj" />
   </ItemGroup>
 
 </Project>
