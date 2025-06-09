@@ -10,6 +10,7 @@ AlbionRadar is an experimental tool designed to provide a real-time information 
 * **Detailed Information Display**: Get insights into the tier and type of detected entities.
 * **Intuitive Overlay**: Information is presented in a separate, non-intrusive window.
 * **Less chance of getting banned**: Unlike other tools, AlbionRadar does not inject code into the game client, reducing the risk of detection and bans.
+* **Network Packet Sniffing**: Utilizes Npcap for capturing network packets, allowing for real-time data extraction without modifying the game client.
 
 ## Requirements
 
