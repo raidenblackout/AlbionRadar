@@ -29,7 +29,6 @@ pipeline {
                 bat 'dotnet nuget locals all --clear'
             }
         }
-        */
         
         stage('Restore NuGet Packages') {
             steps {
