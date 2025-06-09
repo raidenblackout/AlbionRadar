@@ -23,10 +23,6 @@ pipeline {
             }
         }
 
-        // --- TROUBLESHOOTING STEP ---
-        // If builds continue to fail, uncomment the following stage to force
-        // a completely fresh download of all packages.
-        /*
         stage('Clear NuGet Cache') {
             steps {
                 echo "Clearing all local NuGet caches on the agent..."
