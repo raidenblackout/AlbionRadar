@@ -41,6 +41,7 @@ For users who prefer not to build the project from source, you can download the 
         * **For Wi-Fi Users**: Select your active **Wi-Fi adapter**.
         * **For Ethernet Users**: Select your active **Ethernet adapter**.
         * Upon successful selection, AlbionRadar should launch its separate information overlay window
+    * Now open the game or go to the Albion Online game screen. The overlay should be positioned on the left side. 
 ### Option 2: Build from Source (For Developers)
 
 If you are a developer and wish to contribute or modify the project, you can build it from the source code:
