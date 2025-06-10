@@ -37,7 +37,7 @@ For users who prefer not to build the project from source, you can download the 
 3.  **Run the Application**:
     * Extract the downloaded files (if it's a zip/archive).
     * Run the main executable file (e.g., `AlbionRadar.exe`).
-    * **Network Adapter Selection**: The first time you run AlbionRadar, it will prompt you to select your network adapter for packet capture.
+    * **Network Adapter Selection**: It will prompt you to select your network adapter for packet capture.
         * **For Wi-Fi Users**: Select your active **Wi-Fi adapter**.
         * **For Ethernet Users**: Select your active **Ethernet adapter**.
         * Upon successful selection, AlbionRadar should launch its separate information overlay window
